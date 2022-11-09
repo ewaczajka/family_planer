@@ -1,8 +1,8 @@
 import React from 'react'
-import { SectionWrapper } from './Calendar.styles'
+import { SectionWrapper } from './CalendarSection.styles'
 import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
 
-const Calendar = () => {
+const CalendarSection = () => {
 	return (
 		<SectionWrapper>
 			<SectionHeader
@@ -14,4 +14,4 @@ const Calendar = () => {
 	)
 }
 
-export default Calendar
+export default CalendarSection

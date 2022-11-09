@@ -7,13 +7,13 @@ export const theme = {
 		white: '#FFFFFF',
 	},
 	background: {
-		purple:
-			'linear-gradient(273.06deg, rgba(0, 0, 0, 0.2) 9.25%, rgba(0, 0, 0, 0) 93.29%), #8860FB',
 		pink: 'linear-gradient(180deg, #CF94DA 0%, #CF94D9 100%)',
 		orange: 'linear-gradient(180deg, #FECD80 0%, #FFCC80 100%)',
 		yellow: 'linear-gradient(180deg, #E7ED9B 0%, #E7ED9B 100%)',
 		blue: 'linear-gradient(180deg, #81DEEA 0%, #85DDE6 100%)',
 		red: 'linear-gradient(316.28deg, #FEAB93 7.74%, #F9967A 94.58%)',
+		purple:
+		'linear-gradient(273.06deg, rgba(0, 0, 0, 0.2) 9.25%, rgba(0, 0, 0, 0) 93.29%), #8860FB',
 	},
 	fontSize: {
 		xs: '12px',

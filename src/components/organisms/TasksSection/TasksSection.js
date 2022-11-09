@@ -1,8 +1,8 @@
 import React from 'react'
-import { SectionWrapper } from './Tasks.styles'
+import { SectionWrapper } from './TasksSection.styles'
 import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
 
-const Tasks = () => {
+const TasksSection = () => {
 	return (
 		<SectionWrapper>
 			<SectionHeader
@@ -14,4 +14,4 @@ const Tasks = () => {
 	)
 }
 
-export default Tasks
+export default TasksSection

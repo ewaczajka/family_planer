@@ -1,7 +1,7 @@
 import React from 'react'
-import Calendar from 'components/organisms/Calendar/Calendar'
-import Notes from 'components/organisms/Notes/Notes'
-import Tasks from 'components/organisms/Tasks/Tasks'
+import CalendarSection from 'components/organisms/CalendarSection/CalendarSection'
+import NotesSection from 'components/organisms/NotesSection/NotesSection'
+import TasksSection from 'components/organisms/TasksSection/TasksSection'
 
 import styled from 'styled-components'
 
@@ -18,9 +18,9 @@ const Wrapper = styled.div`
 const Dashboard = () => {
 	return (
 		<Wrapper>
-			<Calendar />
-			<Tasks />
-			<Notes />
+			<CalendarSection />
+			<TasksSection />
+			<NotesSection />
 		</Wrapper>
 	)
 }

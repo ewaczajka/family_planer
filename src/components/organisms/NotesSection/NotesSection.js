@@ -1,8 +1,9 @@
 import React from 'react'
-import { SectionWrapper } from './Notes.styles'
+import { SectionWrapper } from './NotesSection.styles'
 import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
+import { Notes } from 'components/molecules/Notes/Notes'
 
-const Notes = () => {
+const NotesSection = () => {
 	return (
 		<SectionWrapper>
 			<SectionHeader
@@ -10,8 +11,9 @@ const Notes = () => {
 				searchPlaceholder='Search Notes Title'
 				addBtn='Add note'
 			/>
+			<Notes />
 		</SectionWrapper>
 	)
 }
 
-export default Notes
+export default NotesSection
