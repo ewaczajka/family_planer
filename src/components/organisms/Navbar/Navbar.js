@@ -10,10 +10,10 @@ const Navbar = () => {
 				FamilyPlaner
 			</Logo>
 			<Navigation>
-				<StyledLink className='active'>Dashboard</StyledLink>
-				<StyledLink>Calendar</StyledLink>
-				<StyledLink>Tasks</StyledLink>
-				<StyledLink>Notes</StyledLink>
+				<StyledLink to='/' end>Dashboard</StyledLink>
+				<StyledLink to='/calendar'>Calendar</StyledLink>
+				<StyledLink to='/tasks'>Tasks</StyledLink>
+				<StyledLink to='/notes'>Notes</StyledLink>
 			</Navigation>
 		</Wrapper>
 	)

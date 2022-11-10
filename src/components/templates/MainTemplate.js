@@ -6,12 +6,18 @@ const Wrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.darkGray};
 	width: 100%;
 `
+const AppBody = styled.div`
+	height: calc(100vh - 68px);
+	padding: 22px;	
+`
 
 export const MainTemplate = ({ children }) => {
 	return (
 		<Wrapper>
 			<Navbar />
-			{children}
+			<AppBody>
+				{children}
+			</AppBody>
 		</Wrapper>
 	)
 }

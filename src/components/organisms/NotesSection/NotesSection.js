@@ -10,6 +10,7 @@ const NotesSection = () => {
 				title='Notes'
 				searchPlaceholder='Search Notes Title'
 				addBtn='Add note'
+				routeDirection='/notes'
 			/>
 			<Notes />
 		</SectionWrapper>

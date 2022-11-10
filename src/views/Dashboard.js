@@ -6,13 +6,12 @@ import TasksSection from 'components/organisms/TasksSection/TasksSection'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-	height: calc(100vh - 68px);
+	height: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
-	padding: 22px;
 `
 
 const Dashboard = () => {

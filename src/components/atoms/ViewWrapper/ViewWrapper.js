@@ -5,5 +5,6 @@ export const ViewWrapper = styled.div`
 	border: 1px solid ${({ theme }) => theme.colors.borderGray};
 	border-radius: 5px;
 	min-height: 0;
+	height: 100%;
 	overflow: hidden;
 `

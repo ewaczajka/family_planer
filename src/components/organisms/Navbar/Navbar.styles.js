@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 export const Wrapper = styled.div`
     height: 68px;
@@ -28,10 +29,11 @@ export const Navigation = styled.div`
     justify-content: center;
 `
 
-export const StyledLink = styled.span`
+export const StyledLink = styled(NavLink)`
     color: ${({ theme }) => theme.colors.lightGray};
     font-size: ${({theme}) => theme.fontSize.m};
     font-weight: bold;
+    text-decoration: none;
     margin: 0 2%;
     position: relative;
 

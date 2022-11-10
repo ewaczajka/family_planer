@@ -13,12 +13,12 @@ const Wrapper = styled.div`
 	padding: 20px 30px;
 `
 
-export const SectionHeader = ({ title, searchPlaceholder, addBtn }) => {
+export const SectionHeader = ({ title, searchPlaceholder, addBtn, routeDirection }) => {
 	return (
 		<Wrapper>
 			<Title>{title}</Title>
 			<SearchBar searchPlaceholder={searchPlaceholder} />
-			<ExpandButton />
+			<ExpandButton routeDirection={routeDirection} />
 			<AddButton addBtn={addBtn} />
 		</Wrapper>
 	)

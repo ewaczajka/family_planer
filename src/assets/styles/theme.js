@@ -20,6 +20,7 @@ export const theme = {
 		s: '14px',
 		m: '18px',
 		l: '24px',
+		xl: '36px',
 	},
 	boxShadow: {
 		shadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
