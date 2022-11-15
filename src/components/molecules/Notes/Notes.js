@@ -5,7 +5,7 @@ import { Wrapper } from './Notes.styles'
 import { db } from 'firebase-config'
 import { collection, getDocs } from 'firebase/firestore'
 
-export const Notes = () => {
+export const Notes = ({ handleOpen }) => {
 	const [notes, setNotes] = useState([])
 	const notesCollectionRef = collection(db, 'notes')
 
@@ -23,11 +23,13 @@ export const Notes = () => {
 				<Note
 					key={note.id}
 					title={note.title}
+					text={note.text}
 					date={
 						note.creationDate.seconds * 1000 +
 						note.creationDate.nanoseconds / 1000
 					}
 					color={`${randomBackground()}`}
+					onClick={e => handleOpen(note)}
 				/>
 			))}
 		</Wrapper>

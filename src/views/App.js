@@ -17,7 +17,7 @@ const App = () => {
 				<MainTemplate>
 					<Routes>
 						<Route path='/calendar' element={<CalendarSection />}></Route>
-						<Route path='/tasks' element={<TasksSection/>}></Route>
+						<Route path='/tasks' element={<TasksSection />}></Route>
 						<Route path='/notes' element={<NotesSection />}></Route>
 						<Route path='/' element={<Dashboard />}></Route>
 					</Routes>

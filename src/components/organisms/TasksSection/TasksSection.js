@@ -8,7 +8,7 @@ const TasksSection = () => {
 			<SectionHeader
 				title='Tasks'
 				searchPlaceholder='Search Tasks'
-				addBtn='none'
+				addBtnText='none'
 				routeDirection='/tasks'
 			/>
 		</SectionWrapper>

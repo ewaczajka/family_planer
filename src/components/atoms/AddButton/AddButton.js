@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { StyledAddButton } from './AddButton.styles'
 
-export const AddButton = ({ addBtn }) => {
+export const AddButton = ({ addBtnText, handleOpen }) => {
 	return (
 		<>
-			{addBtn !== 'none' ? (
-				<StyledAddButton>
+			{addBtnText !== 'none' ? (
+				<StyledAddButton onClick={handleOpen}>
 					<FontAwesomeIcon icon={faCirclePlus} />
-					{addBtn}
+					{addBtnText}
 				</StyledAddButton>
 			) : null}
 		</>
@@ -18,5 +18,6 @@ export const AddButton = ({ addBtn }) => {
 }
 
 AddButton.propTypes = {
-    addBtn: PropTypes.string
+    addBtnText: PropTypes.string,
+	handleOpen: PropTypes.func,
 }

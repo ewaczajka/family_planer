@@ -8,7 +8,7 @@ const CalendarSection = () => {
 			<SectionHeader
 				title='Calendar'
 				searchPlaceholder='Search Events'
-				addBtn='Add event'
+				addBtnText='Add event'
 				routeDirection='/calendar'
 			/>
 		</SectionWrapper>

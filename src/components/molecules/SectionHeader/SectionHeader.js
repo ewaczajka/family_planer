@@ -13,13 +13,13 @@ const Wrapper = styled.div`
 	padding: 20px 30px;
 `
 
-export const SectionHeader = ({ title, searchPlaceholder, addBtn, routeDirection }) => {
+export const SectionHeader = ({ title, searchPlaceholder, addBtnText, routeDirection, handleOpen }) => {
 	return (
 		<Wrapper>
 			<Title>{title}</Title>
 			<SearchBar searchPlaceholder={searchPlaceholder} />
 			<ExpandButton routeDirection={routeDirection} />
-			<AddButton addBtn={addBtn} />
+			<AddButton addBtnText={addBtnText} handleOpen={handleOpen} />
 		</Wrapper>
 	)
 }
@@ -27,5 +27,6 @@ export const SectionHeader = ({ title, searchPlaceholder, addBtn, routeDirection
 SectionHeader.propTypes = {
 	title: PropTypes.string,
 	searchPlaceholder: PropTypes.string,
-	addBtn: PropTypes.string,
+	addBtnText: PropTypes.string,
+	handleOpen: PropTypes.func,
 }

@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 	padding: 15px 17px 13px 15px;
 	display: flex;
 	flex-direction: column;
+	cursor: pointer;
 `
 
 export const Title = styled.h3`
