@@ -11,13 +11,13 @@ const NotesSection = () => {
 	const [currentNote, setCurrentNote] = useState([])
 
 	const handleOpenNoteDetails = data => {
-		handleOpenModal()
 		setCurrentNote(data)
+		handleOpenModal()
 	}
 
 	const handleOpenNewNote = () => {
-		handleOpenModal()
 		setCurrentNote([])
+		handleOpenModal()
 	}
 
 	return (
@@ -32,7 +32,7 @@ const NotesSection = () => {
 			<Notes handleOpen={handleOpenNoteDetails} />
 			{isOpen ? (
 				<Modal handleClose={handleCloseModal}>
-					<NoteEditor note={currentNote} />
+					<NoteEditor note={currentNote} handleClose={handleCloseModal} />
 				</Modal>
 			) : null}
 		</SectionWrapper>

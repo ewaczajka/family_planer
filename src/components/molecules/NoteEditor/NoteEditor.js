@@ -1,48 +1,59 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
+import { StyledNoteEditor, TitleInput, TextInput } from './NoteEditor.styles'
+import { db } from 'firebase-config'
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { CloseButton } from 'components/atoms/CloseButton/CloseButton'
 
-const StyledNoteEditor = styled.div`
-    padding: 0 35px;
-    display: flex;
-    flex-direction: column;
-`
+export const NoteEditor = ({ note, handleClose }) => {
+	const notesCollectionRef = collection(db, 'notes')
 
-const TitleInput = styled.input`
-    // width: 100%;
-    height: 105px;
-    border: none;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.lineGray};
-    font-size: ${({theme}) => theme.fontSize.xl};
-    font-weight: bold;
-    color: ${({ theme }) => theme.colors.darkGray};
-	background-color: transparent;
-	outline: none;
-
-	::placeholder {
-		color: ${({ theme }) => theme.colors.gray};
-		font-style: italic;
+	const NoteTemplate = {
+		title: note.title,
+		text: note.text,
+		creationDate: note.creationDate,
 	}
-`
-const TextInput = styled.textarea`
-    border: none;
-    margin-top: 15px;
-    font-size: ${({theme}) => theme.fontSize.m};
-    line-height: 28px;
-    color: ${({ theme }) => theme.colors.darkGray};
-    background-color: transparent;
-    outline: none;
 
-    ::placeholder {
-        color: ${({ theme }) => theme.colors.gray};
-        font-style: italic;
-}
-`
+	const [NewNote, setNewNote] = useState(NoteTemplate)
+	const [status, setStatus] = useState('draft')
 
-export const NoteEditor = ({note}) => {
-    return (
-        <StyledNoteEditor>
-            <TitleInput defaultValue={note.title} placeholder='Note title'/>
-            <TextInput defaultValue={note.text} placeholder='Type here' />
-        </StyledNoteEditor>
-    )
+	useEffect(() => {
+		if (status === 'final') {
+			addDoc(notesCollectionRef, NewNote)
+			handleClose()
+		}
+	}, [NewNote])
+
+	const createNote = e => {
+		setStatus('final')
+		e.preventDefault()
+		updateCreationDate()
+	}
+
+	const updateTitle = e => {
+		setNewNote(prevState => ({ ...prevState, title: e.target.value }))
+	}
+
+	const updateText = e => {
+		setNewNote(prevState => ({ ...prevState, text: e.target.value }))
+	}
+
+	const updateCreationDate = () => {
+		setNewNote(prevState => ({ ...prevState, creationDate: Timestamp.now() }))
+	}
+
+	return (
+		<StyledNoteEditor>
+			<TitleInput
+				defaultValue={note.title}
+				placeholder='Note title'
+				onChange={e => updateTitle(e)}
+			/>
+			<TextInput
+				defaultValue={note.text}
+				placeholder='Type here'
+				onChange={e => updateText(e)}
+			/>
+			<CloseButton onClick={e => createNote(e)} />
+		</StyledNoteEditor>
+	)
 }

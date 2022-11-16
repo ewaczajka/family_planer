@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { StyledButton } from "./CloseButton.styles"
 
-export const CloseButton = ({handleClose}) => {
+export const CloseButton = ({onClick}) => {
     return (
-        <StyledButton onClick={handleClose}>
+        <StyledButton onClick={onClick}>
             <FontAwesomeIcon icon={faXmark} />
         </StyledButton>
     )
