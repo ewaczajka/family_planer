@@ -6,6 +6,7 @@ export const theme = {
 		borderGray: 'rgba(255, 255, 255, 0.15)',
 		lineGray: 'rgba(11, 16, 31, 0.2)',
 		white: '#FFFFFF',
+		red: '#FB501A'
 	},
 	background: {
 		pink: 'linear-gradient(180deg, #CF94DA 0%, #CF94D9 100%)',

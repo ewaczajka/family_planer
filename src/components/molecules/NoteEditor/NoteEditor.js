@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { StyledNoteEditor, TitleInput, TextInput } from './NoteEditor.styles'
 import { db } from 'firebase-config'
-import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { collection, addDoc, updateDoc, deleteDoc, Timestamp, doc} from 'firebase/firestore'
 import { CloseButton } from 'components/atoms/CloseButton/CloseButton'
+import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton'
 
 export const NoteEditor = ({ note, handleClose }) => {
 	const notesCollectionRef = collection(db, 'notes')
@@ -18,14 +19,31 @@ export const NoteEditor = ({ note, handleClose }) => {
 
 	useEffect(() => {
 		if (status === 'final') {
-			addDoc(notesCollectionRef, NewNote)
+			if (NoteTemplate.title === undefined) {
+				const createNote = async () => {
+					await addDoc(notesCollectionRef, NewNote)
+				}
+				createNote()
+			} else if ( NewNote.title !== NoteTemplate.title || NewNote.text !== NoteTemplate.text ) {
+				const updateNote = async id => {
+					const noteDoc = doc(db, 'notes', id)
+					await updateDoc(noteDoc, { ...NewNote })
+				}
+				updateNote(note.id)
+			}
 			handleClose()
 		}
 	}, [NewNote])
 
-	const createNote = e => {
-		setStatus('final')
+	const deleteNote = async id => {
+		const noteDoc = doc(db, 'notes', id)
+		await deleteDoc(noteDoc)
+		handleClose()
+	}
+
+	const handleNote = e => {
 		e.preventDefault()
+		setStatus('final')
 		updateCreationDate()
 	}
 
@@ -42,18 +60,24 @@ export const NoteEditor = ({ note, handleClose }) => {
 	}
 
 	return (
-		<StyledNoteEditor>
+		<StyledNoteEditor as='form' onSubmit={e => handleNote(e)}>
 			<TitleInput
 				defaultValue={note.title}
 				placeholder='Note title'
 				onChange={e => updateTitle(e)}
+				required
 			/>
+			<DeleteButton
+				className='deleteBtn'
+				onClick={() => { deleteNote(note.id) }}>
+				Delete note
+			</DeleteButton>
 			<TextInput
 				defaultValue={note.text}
 				placeholder='Type here'
 				onChange={e => updateText(e)}
 			/>
-			<CloseButton onClick={e => createNote(e)} />
+			<CloseButton type='submit' />
 		</StyledNoteEditor>
 	)
 }
