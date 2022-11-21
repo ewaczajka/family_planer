@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Note } from 'components/atoms/Note/Note'
-import { randomBackground } from 'helpers/randomBackground'
 import { Wrapper } from './Notes.styles'
 import { db } from 'firebase-config'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 
 export const Notes = ({ handleOpen }) => {
 	const [notes, setNotes] = useState([])
@@ -14,7 +13,9 @@ export const Notes = ({ handleOpen }) => {
 			const data = await getDocs(notesCollectionRef)
 			setNotes(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
 		}
-		getNotes()
+		onSnapshot(notesCollectionRef, () => {
+			getNotes()
+		})
 	}, [])
 
 	return (
@@ -28,7 +29,7 @@ export const Notes = ({ handleOpen }) => {
 						note.creationDate.seconds * 1000 +
 						note.creationDate.nanoseconds / 1000
 					}
-					color={`${randomBackground()}`}
+					color={note.color}
 					onClick={e => handleOpen(note)}
 				/>
 			))}

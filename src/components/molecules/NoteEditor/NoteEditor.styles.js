@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledNoteEditor = styled.div`
-	padding: 0 35px;
+	padding: 0 35px 35px 35px;
 	display: flex;
 	flex-direction: column;
 
@@ -11,10 +11,16 @@ export const StyledNoteEditor = styled.div`
 		text-align: right;
 		padding: 10px 0;
 	}
+	p {
+		color: ${({ theme }) => theme.colors.red};
+		font-size: ${({ theme }) => theme.fontSize.s};
+		font-style: italic;
+		font-weight: bold;
+	}
 `
 
 export const TitleInput = styled.input`
-	// width: 100%;
+	margin-right: 35px;
 	height: 105px;
 	border: none;
 	font-size: ${({ theme }) => theme.fontSize.xl};
@@ -36,7 +42,8 @@ export const TextInput = styled.textarea`
 	color: ${({ theme }) => theme.colors.darkGray};
 	background-color: transparent;
 	outline: none;
-
+	resize: none;
+	
 	::placeholder {
 		color: ${({ theme }) => theme.colors.gray};
 		font-style: italic;

@@ -4,6 +4,7 @@ import { db } from 'firebase-config'
 import { collection, addDoc, updateDoc, deleteDoc, Timestamp, doc} from 'firebase/firestore'
 import { CloseButton } from 'components/atoms/CloseButton/CloseButton'
 import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton'
+import { randomBackground } from 'helpers/randomBackground'
 
 export const NoteEditor = ({ note, handleClose }) => {
 	const notesCollectionRef = collection(db, 'notes')
@@ -12,14 +13,17 @@ export const NoteEditor = ({ note, handleClose }) => {
 		title: note.title,
 		text: note.text,
 		creationDate: note.creationDate,
+		color: note.color,
 	}
 
 	const [NewNote, setNewNote] = useState(NoteTemplate)
-	const [status, setStatus] = useState('draft')
+	const [Status, setStatus] = useState('draft')
+	const [Error, setError] = useState(false)
 
 	useEffect(() => {
-		if (status === 'final') {
-			if (NoteTemplate.title === undefined) {
+		if (Status === 'final') {
+			if (!NoteTemplate.title) {
+				NewNote.color = randomBackground()
 				const createNote = async () => {
 					await addDoc(notesCollectionRef, NewNote)
 				}
@@ -33,6 +37,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 			}
 			handleClose()
 		}
+		console.log(NewNote)
 	}, [NewNote])
 
 	const deleteNote = async id => {
@@ -43,12 +48,25 @@ export const NoteEditor = ({ note, handleClose }) => {
 
 	const handleNote = e => {
 		e.preventDefault()
+		if ( !NewNote.title && !NewNote.text) {
+			handleClose()
+		}
+		else if (!NewNote.title) {
+			setError(true)
+			return
+		}
+		
 		setStatus('final')
+		
+		if (!NewNote.text) { 
+			NewNote.text = '' 
+		}
 		updateCreationDate()
 	}
 
 	const updateTitle = e => {
 		setNewNote(prevState => ({ ...prevState, title: e.target.value }))
+		setError(false)
 	}
 
 	const updateText = e => {
@@ -65,8 +83,10 @@ export const NoteEditor = ({ note, handleClose }) => {
 				defaultValue={note.title}
 				placeholder='Note title'
 				onChange={e => updateTitle(e)}
-				required
+				type='text'
+				maxLength='40'
 			/>
+			{Error ? <p>Title is required!</p> : null }
 			<DeleteButton
 				className='deleteBtn'
 				onClick={() => { deleteNote(note.id) }}>
@@ -76,6 +96,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 				defaultValue={note.text}
 				placeholder='Type here'
 				onChange={e => updateText(e)}
+				rows='10'
 			/>
 			<CloseButton type='submit' />
 		</StyledNoteEditor>
