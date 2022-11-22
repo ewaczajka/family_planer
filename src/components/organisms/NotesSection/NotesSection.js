@@ -9,6 +9,7 @@ export const NotesSection = () => {
 	const { Modal, isOpen, handleClose, handleOpen } = useModal()
 
 	const [currentNote, setCurrentNote] = useState([])
+	const [searchPhrase, setSearchPhrase] = useState('')
 
 	const handleOpenNoteDetails = data => {
 		setCurrentNote(data)
@@ -20,6 +21,10 @@ export const NotesSection = () => {
 		handleOpen()
 	}
 
+	const handleChange = (e) => {
+		setSearchPhrase(e.target.value)
+	}
+
 	return (
 		<SectionWrapper>
 			<SectionHeader
@@ -28,8 +33,9 @@ export const NotesSection = () => {
 				addBtnText='Add note'
 				routeDirection='/notes'
 				handleOpen={handleOpenNewNote}
+				handleChange={handleChange}
 			/>
-			<Notes handleOpen={handleOpenNoteDetails} />
+			<Notes handleOpen={handleOpenNoteDetails} searchPhrase={searchPhrase} />
 			{isOpen ? (
 				<Modal handleClose={handleClose}>
 					<NoteEditor note={currentNote} handleClose={handleClose} />

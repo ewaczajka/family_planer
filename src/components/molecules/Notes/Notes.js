@@ -4,7 +4,7 @@ import { Wrapper } from './Notes.styles'
 import { db } from 'firebase-config'
 import { collection, query, orderBy, getDocs, onSnapshot } from 'firebase/firestore'
 
-export const Notes = ({ handleOpen }) => {
+export const Notes = ({ handleOpen, searchPhrase }) => {
 	const [notes, setNotes] = useState([])
 	const notesCollectionRef = collection(db, 'notes')
 	const q = query(notesCollectionRef, orderBy("creationDate", "desc"))
@@ -22,6 +22,7 @@ export const Notes = ({ handleOpen }) => {
 	return (
 		<Wrapper>
 			{notes.map(note => (
+				note.title.includes(searchPhrase) ? (
 				<Note
 					key={note.id}
 					title={note.title}
@@ -30,6 +31,7 @@ export const Notes = ({ handleOpen }) => {
 					color={note.color}
 					onClick={() => handleOpen(note)}
 				/>
+				) : null
 			))}
 		</Wrapper>
 	)

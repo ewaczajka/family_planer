@@ -83,6 +83,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 			{Error ? <ErrorMsg>{Error}</ErrorMsg> : null}
 			<DeleteButton
 				className='deleteBtn'
+				type='button'
 				onClick={() => {
 					deleteNote(note.id)
 				}}>
