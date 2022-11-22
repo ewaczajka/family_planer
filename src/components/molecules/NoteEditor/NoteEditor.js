@@ -4,6 +4,7 @@ import { db } from 'firebase-config'
 import { collection, addDoc, updateDoc, deleteDoc, Timestamp, doc} from 'firebase/firestore'
 import { CloseButton } from 'components/atoms/CloseButton/CloseButton'
 import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton'
+import { ErrorMsg } from 'components/atoms/ErrorMsg/ErrorMsg'
 import { randomBackground } from 'helpers/randomBackground'
 
 export const NoteEditor = ({ note, handleClose }) => {
@@ -18,7 +19,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 
 	const [NewNote, setNewNote] = useState(NoteTemplate)
 	const [Status, setStatus] = useState('draft')
-	const [Error, setError] = useState(false)
+	const [Error, setError] = useState(null)
 
 	useEffect(() => {
 		if (Status === 'final') {
@@ -37,36 +38,29 @@ export const NoteEditor = ({ note, handleClose }) => {
 			}
 			handleClose()
 		}
-		console.log(NewNote)
 	}, [NewNote])
 
 	const deleteNote = async id => {
-		const noteDoc = doc(db, 'notes', id)
-		await deleteDoc(noteDoc)
+		if (id) {
+			const noteDoc = doc(db, 'notes', id)
+			await deleteDoc(noteDoc)
+		}
 		handleClose()
 	}
 
 	const handleNote = e => {
 		e.preventDefault()
-		if ( !NewNote.title && !NewNote.text) {
-			handleClose()
-		}
-		else if (!NewNote.title) {
-			setError(true)
-			return
-		}
-		
+		if (!NewNote.title && !NewNote.text) handleClose()
+		else if (!NewNote.title) return setError('Title is required!')
+
 		setStatus('final')
-		
-		if (!NewNote.text) { 
-			NewNote.text = '' 
-		}
+		if (!NewNote.text) NewNote.text = ''
 		updateCreationDate()
 	}
 
 	const updateTitle = e => {
 		setNewNote(prevState => ({ ...prevState, title: e.target.value }))
-		setError(false)
+		setError(null)
 	}
 
 	const updateText = e => {
@@ -86,10 +80,12 @@ export const NoteEditor = ({ note, handleClose }) => {
 				type='text'
 				maxLength='40'
 			/>
-			{Error ? <p>Title is required!</p> : null }
+			{Error ? <ErrorMsg>{Error}</ErrorMsg> : null}
 			<DeleteButton
 				className='deleteBtn'
-				onClick={() => { deleteNote(note.id) }}>
+				onClick={() => {
+					deleteNote(note.id)
+				}}>
 				Delete note
 			</DeleteButton>
 			<TextInput

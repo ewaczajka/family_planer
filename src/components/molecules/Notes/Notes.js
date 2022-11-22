@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Note } from 'components/atoms/Note/Note'
 import { Wrapper } from './Notes.styles'
 import { db } from 'firebase-config'
-import { collection, getDocs, onSnapshot } from 'firebase/firestore'
+import { collection, query, orderBy, getDocs, onSnapshot } from 'firebase/firestore'
 
 export const Notes = ({ handleOpen }) => {
 	const [notes, setNotes] = useState([])
 	const notesCollectionRef = collection(db, 'notes')
+	const q = query(notesCollectionRef, orderBy("creationDate", "desc"))
 
 	useEffect(() => {
 		const getNotes = async () => {
-			const data = await getDocs(notesCollectionRef)
+			const data = await getDocs(q)
 			setNotes(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
 		}
 		onSnapshot(notesCollectionRef, () => {
@@ -25,12 +26,9 @@ export const Notes = ({ handleOpen }) => {
 					key={note.id}
 					title={note.title}
 					text={note.text}
-					date={
-						note.creationDate.seconds * 1000 +
-						note.creationDate.nanoseconds / 1000
-					}
+					date={note.creationDate.seconds * 1000}
 					color={note.color}
-					onClick={e => handleOpen(note)}
+					onClick={() => handleOpen(note)}
 				/>
 			))}
 		</Wrapper>
