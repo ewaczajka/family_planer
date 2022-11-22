@@ -6,6 +6,5 @@ export const StyledButton = styled(NavLink)`
 	color: ${({ theme }) => theme.colors.white};
 	border: none;
 	background-color: transparent;
-	margin-left: 20px;
 	cursor: pointer;
 `

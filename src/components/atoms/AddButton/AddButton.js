@@ -18,6 +18,6 @@ export const AddButton = ({ addBtnText, handleOpen }) => {
 }
 
 AddButton.propTypes = {
-    addBtnText: PropTypes.string,
+	addBtnText: PropTypes.string,
 	handleOpen: PropTypes.func,
 }

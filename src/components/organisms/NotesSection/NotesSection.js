@@ -2,22 +2,22 @@ import React, { useState } from 'react'
 import { SectionWrapper } from './NotesSection.styles'
 import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
 import { Notes } from 'components/molecules/Notes/Notes'
-import useModal from 'components/molecules/Modal/useModal'
+import { useModal } from 'components/molecules/Modal/useModal'
 import { NoteEditor } from 'components/molecules/NoteEditor/NoteEditor'
 
-const NotesSection = () => {
-	const { Modal, isOpen, handleCloseModal, handleOpenModal } = useModal()
+export const NotesSection = () => {
+	const { Modal, isOpen, handleClose, handleOpen } = useModal()
 
 	const [currentNote, setCurrentNote] = useState([])
 
 	const handleOpenNoteDetails = data => {
 		setCurrentNote(data)
-		handleOpenModal()
+		handleOpen()
 	}
 
 	const handleOpenNewNote = () => {
 		setCurrentNote([])
-		handleOpenModal()
+		handleOpen()
 	}
 
 	return (
@@ -31,12 +31,10 @@ const NotesSection = () => {
 			/>
 			<Notes handleOpen={handleOpenNoteDetails} />
 			{isOpen ? (
-				<Modal handleClose={handleCloseModal}>
-					<NoteEditor note={currentNote} handleClose={handleCloseModal} />
+				<Modal handleClose={handleClose}>
+					<NoteEditor note={currentNote} handleClose={handleClose} />
 				</Modal>
 			) : null}
 		</SectionWrapper>
 	)
 }
-
-export default NotesSection

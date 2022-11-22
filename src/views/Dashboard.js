@@ -1,20 +1,10 @@
 import React from 'react'
-import CalendarSection from 'components/organisms/CalendarSection/CalendarSection'
-import NotesSection from 'components/organisms/NotesSection/NotesSection'
-import TasksSection from 'components/organisms/TasksSection/TasksSection'
+import { CalendarSection } from 'components/organisms/CalendarSection/CalendarSection'
+import { NotesSection } from 'components/organisms/NotesSection/NotesSection'
+import { TasksSection } from 'components/organisms/TasksSection/TasksSection'
+import { Wrapper } from './Dashboard.styles'
 
-import styled from 'styled-components'
-
-const Wrapper = styled.div`
-	height: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
-`
-
-const Dashboard = () => {
+export const Dashboard = () => {
 	return (
 		<Wrapper>
 			<CalendarSection />
@@ -23,5 +13,3 @@ const Dashboard = () => {
 		</Wrapper>
 	)
 }
-
-export default Dashboard

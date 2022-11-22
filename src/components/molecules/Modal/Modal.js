@@ -4,7 +4,7 @@ import { ModalWrapper } from './Modal.styles'
 
 const modalContainer = document.getElementById('modal-container')
 
-const Modal = ({ children }) => {
+export const Modal = ({ children }) => {
 	const modalNode = document.createElement('div')
 
 	useEffect(() => {
@@ -19,5 +19,3 @@ const Modal = ({ children }) => {
 		modalNode
 	)
 }
-
-export default Modal

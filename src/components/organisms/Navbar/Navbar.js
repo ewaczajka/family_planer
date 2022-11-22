@@ -2,7 +2,7 @@ import React from 'react'
 import logoIcon from 'assets/logo.png'
 import { Wrapper, Logo, Navigation, StyledLink } from './Navbar.styles'
 
-const Navbar = () => {
+export const Navbar = () => {
 	return (
 		<Wrapper>
 			<Logo>
@@ -18,5 +18,3 @@ const Navbar = () => {
 		</Wrapper>
 	)
 }
-
-export default Navbar

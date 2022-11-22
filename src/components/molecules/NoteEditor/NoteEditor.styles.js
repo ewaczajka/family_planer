@@ -4,6 +4,7 @@ export const StyledNoteEditor = styled.div`
 	padding: 0 35px 35px 35px;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 
 	.deleteBtn {
 		border-top: 1px solid ${({ theme }) => theme.colors.lineGray};
@@ -11,11 +12,11 @@ export const StyledNoteEditor = styled.div`
 		text-align: right;
 		padding: 10px 0;
 	}
-	p {
-		color: ${({ theme }) => theme.colors.red};
-		font-size: ${({ theme }) => theme.fontSize.s};
-		font-style: italic;
-		font-weight: bold;
+
+	> :last-child {
+		position: absolute;
+		top: 40px;
+		right: 40px;
 	}
 `
 
@@ -34,6 +35,7 @@ export const TitleInput = styled.input`
 		font-style: italic;
 	}
 `
+
 export const TextInput = styled.textarea`
 	border: none;
 	margin-top: 15px;
@@ -43,7 +45,7 @@ export const TextInput = styled.textarea`
 	background-color: transparent;
 	outline: none;
 	resize: none;
-	
+
 	::placeholder {
 		color: ${({ theme }) => theme.colors.gray};
 		font-style: italic;
