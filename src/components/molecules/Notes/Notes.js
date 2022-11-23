@@ -22,7 +22,7 @@ export const Notes = ({ handleOpen, searchPhrase }) => {
 	return (
 		<Wrapper>
 			{notes.map(note => (
-				note.title.includes(searchPhrase) ? (
+				note.title.toLowerCase().includes(searchPhrase.toLowerCase()) ? (
 				<Note
 					key={note.id}
 					title={note.title}
