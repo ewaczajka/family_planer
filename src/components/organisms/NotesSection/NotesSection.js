@@ -4,11 +4,12 @@ import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
 import { Notes } from 'components/molecules/Notes/Notes'
 import { useModal } from 'components/molecules/Modal/useModal'
 import { NoteEditor } from 'components/molecules/NoteEditor/NoteEditor'
+import { Modal } from 'components/molecules/Modal/Modal'
 
 export const NotesSection = () => {
-	const { Modal, isOpen, handleClose, handleOpen } = useModal()
+	const { isOpen, handleClose, handleOpen } = useModal()
 
-	const [currentNote, setCurrentNote] = useState([])
+	const [currentNote, setCurrentNote] = useState()
 	const [searchPhrase, setSearchPhrase] = useState('')
 
 	const handleOpenNoteDetails = data => {
@@ -17,7 +18,7 @@ export const NotesSection = () => {
 	}
 
 	const handleOpenNewNote = () => {
-		setCurrentNote([])
+		setCurrentNote({})
 		handleOpen()
 	}
 

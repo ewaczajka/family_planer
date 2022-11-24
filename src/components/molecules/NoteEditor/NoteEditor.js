@@ -11,34 +11,34 @@ export const NoteEditor = ({ note, handleClose }) => {
 	const notesCollectionRef = collection(db, 'notes')
 
 	const NoteTemplate = {
-		title: note.title,
-		text: note.text,
+		title: note.title | '',
+		text: note.text | '',
 		creationDate: note.creationDate,
 		color: note.color,
 	}
 
-	const [NewNote, setNewNote] = useState(NoteTemplate)
-	const [Status, setStatus] = useState('draft')
-	const [Error, setError] = useState(null)
+	const [newNote, setNewNote] = useState(NoteTemplate)
+	const [status, setStatus] = useState('draft')
+	const [error, setError] = useState(null)
 
 	useEffect(() => {
-		if (Status === 'final') {
+		if (status === 'final') {
 			if (!NoteTemplate.title) {
-				NewNote.color = randomBackground()
+				newNote.color = randomBackground()
 				const createNote = async () => {
-					await addDoc(notesCollectionRef, NewNote)
+					await addDoc(notesCollectionRef, newNote)
 				}
 				createNote()
-			} else if ( NewNote.title !== NoteTemplate.title || NewNote.text !== NoteTemplate.text ) {
+			} else if ( newNote.title !== NoteTemplate.title || newNote.text !== NoteTemplate.text ) {
 				const updateNote = async id => {
 					const noteDoc = doc(db, 'notes', id)
-					await updateDoc(noteDoc, { ...NewNote })
+					await updateDoc(noteDoc, { ...newNote })
 				}
 				updateNote(note.id)
 			}
 			handleClose()
 		}
-	}, [NewNote])
+	}, [status])
 
 	const deleteNote = async id => {
 		if (id) {
@@ -50,11 +50,13 @@ export const NoteEditor = ({ note, handleClose }) => {
 
 	const handleNote = e => {
 		e.preventDefault()
-		if (!NewNote.title && !NewNote.text) handleClose()
-		else if (!NewNote.title) return setError('Title is required!')
-
+		if (!newNote.title && !newNote.text) {
+			handleClose()
+		}
+		else if (!newNote.title) {
+			return setError('Title is required!')
+		}
 		setStatus('final')
-		if (!NewNote.text) NewNote.text = ''
 		updateCreationDate()
 	}
 
@@ -80,7 +82,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 				type='text'
 				maxLength='40'
 			/>
-			{Error ? <ErrorMsg>{Error}</ErrorMsg> : null}
+			{error ? <ErrorMsg>{error}</ErrorMsg> : null}
 			<DeleteButton
 				className='deleteBtn'
 				type='button'

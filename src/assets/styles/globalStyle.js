@@ -19,4 +19,8 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Roboto', sans-serif;
     }
 
+    *::-webkit-scrollbar {
+        background: transparent;
+    }
+
 `
