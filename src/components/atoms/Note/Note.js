@@ -16,7 +16,7 @@ export const Note = ({ title, date, color, onClick }) => {
 
 Note.propTypes = {
 	title: PropTypes.string,
-	// date:
+	date: PropTypes.number,
 	color: PropTypes.string,
 	onClick: PropTypes.func,
 }

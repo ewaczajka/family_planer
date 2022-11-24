@@ -9,27 +9,23 @@ import { randomBackground } from 'helpers/randomBackground'
 
 export const NoteEditor = ({ note, handleClose }) => {
 	const notesCollectionRef = collection(db, 'notes')
+	
+	const {title, text = note.text || '', creationDate, color} = note;
+	const noteTemplate = { title, text, creationDate, color }
 
-	const NoteTemplate = {
-		title: note.title | '',
-		text: note.text | '',
-		creationDate: note.creationDate,
-		color: note.color,
-	}
-
-	const [newNote, setNewNote] = useState(NoteTemplate)
+	const [newNote, setNewNote] = useState(noteTemplate)
 	const [status, setStatus] = useState('draft')
 	const [error, setError] = useState(null)
 
 	useEffect(() => {
 		if (status === 'final') {
-			if (!NoteTemplate.title) {
+			if (!noteTemplate.title) {
 				newNote.color = randomBackground()
 				const createNote = async () => {
 					await addDoc(notesCollectionRef, newNote)
 				}
 				createNote()
-			} else if ( newNote.title !== NoteTemplate.title || newNote.text !== NoteTemplate.text ) {
+			} else if ( newNote.title !== noteTemplate.title || newNote.text !== noteTemplate.text ) {
 				const updateNote = async id => {
 					const noteDoc = doc(db, 'notes', id)
 					await updateDoc(noteDoc, { ...newNote })
@@ -78,7 +74,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 			<TitleInput
 				defaultValue={note.title}
 				placeholder='Note title'
-				onChange={e => updateTitle(e)}
+				onChange={updateTitle}
 				type='text'
 				maxLength='40'
 			/>
@@ -94,7 +90,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 			<TextInput
 				defaultValue={note.text}
 				placeholder='Type here'
-				onChange={e => updateText(e)}
+				onChange={updateText}
 				rows='10'
 			/>
 			<CloseButton type='submit' />
