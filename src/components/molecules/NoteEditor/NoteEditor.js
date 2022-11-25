@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { StyledNoteEditor, TitleInput, TextInput } from './NoteEditor.styles'
 import { db } from 'firebase-config'
 import { collection, addDoc, updateDoc, deleteDoc, Timestamp, doc} from 'firebase/firestore'
@@ -17,19 +17,21 @@ export const NoteEditor = ({ note, handleClose }) => {
 	const [status, setStatus] = useState('draft')
 	const [error, setError] = useState(null)
 
+	const createNote = useCallback(async () => {
+		await addDoc(notesCollectionRef, newNote)
+	}, [status, notesCollectionRef])
+
+	const updateNote = useCallback(async id => {
+		const noteDoc = doc(db, 'notes', id)
+		await updateDoc(noteDoc, { ...newNote })
+	}, [status])
+
 	useEffect(() => {
 		if (status === 'final') {
 			if (!noteTemplate.title) {
 				newNote.color = randomBackground()
-				const createNote = async () => {
-					await addDoc(notesCollectionRef, newNote)
-				}
 				createNote()
 			} else if ( newNote.title !== noteTemplate.title || newNote.text !== noteTemplate.text ) {
-				const updateNote = async id => {
-					const noteDoc = doc(db, 'notes', id)
-					await updateDoc(noteDoc, { ...newNote })
-				}
 				updateNote(note.id)
 			}
 			handleClose()
