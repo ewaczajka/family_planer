@@ -1,24 +1,19 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Title } from 'components/atoms/Title/Title'
 import { SearchBar } from 'components/atoms/SearchBar/SearchBar'
 import { ExpandButton } from 'components/atoms/ExpandButton/ExpandButton'
 import { AddButton } from 'components/atoms/AddButton/AddButton'
-import styled from 'styled-components'
+import { Wrapper } from './SectionHeader.styles'
 
-const Wrapper = styled.div`
-	width: 100%;
-	display: flex;
-	align-items: center;
-	padding: 20px 30px;
-`
-
-export const SectionHeader = ({ title, searchPlaceholder, addBtnText, routeDirection, handleOpen }) => {
+export const SectionHeader = ({ title, searchPlaceholder, addBtnText, routeDirection, handleOpen, handleChange }) => {
+	const location = useLocation()
 	return (
 		<Wrapper>
 			<Title>{title}</Title>
-			<SearchBar searchPlaceholder={searchPlaceholder} />
-			<ExpandButton routeDirection={routeDirection} />
+			<SearchBar searchPlaceholder={searchPlaceholder} handleChange={handleChange} />
+			{location.pathname === '/' ? <ExpandButton routeDirection={routeDirection} /> : null}
 			<AddButton addBtnText={addBtnText} handleOpen={handleOpen} />
 		</Wrapper>
 	)

@@ -4,10 +4,10 @@ import { theme } from 'assets/styles/theme'
 import { MainTemplate } from 'components/templates/MainTemplate'
 import { GlobalStyle } from 'assets/styles/globalStyle'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Dashboard from 'views/Dashboard'
-import CalendarSection from 'components/organisms/CalendarSection/CalendarSection'
-import TasksSection from 'components/organisms/TasksSection/TasksSection'
-import NotesSection from 'components/organisms/NotesSection/NotesSection'
+import { Dashboard } from 'views/Dashboard'
+import { CalendarSection } from 'components/organisms/CalendarSection/CalendarSection'
+import { TasksSection } from 'components/organisms/TasksSection/TasksSection'
+import { NotesSection } from 'components/organisms/NotesSection/NotesSection'
 
 const App = () => {
 	return (

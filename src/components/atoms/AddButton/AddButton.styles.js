@@ -8,7 +8,6 @@ export const StyledAddButton = styled.button`
 	background: ${({ theme }) => theme.background.purple};
 	border: none;
 	border-radius: 5px;
-	margin-left: 20px;
 	cursor: pointer;
 
 	svg {

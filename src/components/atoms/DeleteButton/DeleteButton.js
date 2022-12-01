@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
 
-export const StyledButton = styled(NavLink)`
+export const DeleteButton = styled.button`
+	color: ${({ theme }) => theme.colors.red};
 	font-size: ${({ theme }) => theme.fontSize.s};
-	color: ${({ theme }) => theme.colors.white};
+	font-weight: bold;
 	border: none;
 	background-color: transparent;
 	cursor: pointer;

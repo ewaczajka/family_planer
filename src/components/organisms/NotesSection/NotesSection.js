@@ -2,22 +2,28 @@ import React, { useState } from 'react'
 import { SectionWrapper } from './NotesSection.styles'
 import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
 import { Notes } from 'components/molecules/Notes/Notes'
-import useModal from 'components/molecules/Modal/useModal'
+import { useModal } from 'components/molecules/Modal/useModal'
 import { NoteEditor } from 'components/molecules/NoteEditor/NoteEditor'
+import { Modal } from 'components/molecules/Modal/Modal'
 
-const NotesSection = () => {
-	const { Modal, isOpen, handleCloseModal, handleOpenModal } = useModal()
+export const NotesSection = () => {
+	const { isOpen, handleClose, handleOpen } = useModal()
 
-	const [currentNote, setCurrentNote] = useState([])
+	const [currentNote, setCurrentNote] = useState()
+	const [searchPhrase, setSearchPhrase] = useState('')
 
 	const handleOpenNoteDetails = data => {
 		setCurrentNote(data)
-		handleOpenModal()
+		handleOpen()
 	}
 
 	const handleOpenNewNote = () => {
-		setCurrentNote([])
-		handleOpenModal()
+		setCurrentNote({})
+		handleOpen()
+	}
+
+	const handleChange = (e) => {
+		setSearchPhrase(e.target.value)
 	}
 
 	return (
@@ -28,15 +34,14 @@ const NotesSection = () => {
 				addBtnText='Add note'
 				routeDirection='/notes'
 				handleOpen={handleOpenNewNote}
+				handleChange={handleChange}
 			/>
-			<Notes handleOpen={handleOpenNoteDetails} />
+			<Notes handleOpen={handleOpenNoteDetails} searchPhrase={searchPhrase} />
 			{isOpen ? (
-				<Modal handleClose={handleCloseModal}>
-					<NoteEditor note={currentNote} handleClose={handleCloseModal} />
+				<Modal handleClose={handleClose}>
+					<NoteEditor note={currentNote} handleClose={handleClose} />
 				</Modal>
 			) : null}
 		</SectionWrapper>
 	)
 }
-
-export default NotesSection

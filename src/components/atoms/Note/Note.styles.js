@@ -17,10 +17,13 @@ export const Title = styled.h3`
 	color: ${({ theme }) => theme.colors.darkGray};
 	font-weight: normal;
 	flex: 1 1 0;
+	overflow-wrap: break-word;
+	overflow-y: scroll;
 `
 
 export const Date = styled.p`
 	font-size: ${({ theme }) => theme.fontSize.xs};
 	color: ${({ theme }) => theme.colors.gray};
+	margin-top: 5px;
 	opacity: 0.5;
 `

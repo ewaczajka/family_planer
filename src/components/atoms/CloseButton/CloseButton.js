@@ -1,12 +1,12 @@
-import React from "react"
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { StyledButton } from "./CloseButton.styles"
+import { StyledButton } from './CloseButton.styles'
 
-export const CloseButton = ({onClick}) => {
-    return (
-        <StyledButton onClick={onClick}>
-            <FontAwesomeIcon icon={faXmark} />
-        </StyledButton>
-    )
+export const CloseButton = ({ type }) => {
+	return (
+		<StyledButton type={type}>
+			<FontAwesomeIcon icon={faXmark} />
+		</StyledButton>
+	)
 }

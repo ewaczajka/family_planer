@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { Wrapper, StyledSearchBar } from './SearchBar.styles'
 
-export const SearchBar = ({ searchPlaceholder }) => {
+export const SearchBar = ({ searchPlaceholder, handleChange }) => {
 	return (
 		<Wrapper>
 			<FontAwesomeIcon icon={faMagnifyingGlass} />
-			<StyledSearchBar placeholder={searchPlaceholder} />
+			<StyledSearchBar placeholder={searchPlaceholder} onChange={handleChange} />
 		</Wrapper>
 	)
 }

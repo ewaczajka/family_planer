@@ -2,7 +2,7 @@ import React from 'react'
 import { SectionWrapper } from './TasksSection.styles'
 import { SectionHeader } from 'components/molecules/SectionHeader/SectionHeader'
 
-const TasksSection = () => {
+export const TasksSection = () => {
 	return (
 		<SectionWrapper>
 			<SectionHeader
@@ -14,5 +14,3 @@ const TasksSection = () => {
 		</SectionWrapper>
 	)
 }
-
-export default TasksSection
