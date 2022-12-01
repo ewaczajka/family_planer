@@ -1,3 +1,8 @@
+## Link to Figma
+
+https://www.figma.com/proto/Dl5KQE4pV3xIKqJXTAGeiZ/Family-Planer?node-id=1%3A2&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=1%3A2
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

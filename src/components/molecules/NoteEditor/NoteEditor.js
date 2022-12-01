@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { StyledNoteEditor, TitleInput, TextInput } from './NoteEditor.styles'
 import { db } from 'firebase-config'
 import { collection, addDoc, updateDoc, deleteDoc, Timestamp, doc} from 'firebase/firestore'
@@ -9,36 +9,34 @@ import { randomBackground } from 'helpers/randomBackground'
 
 export const NoteEditor = ({ note, handleClose }) => {
 	const notesCollectionRef = collection(db, 'notes')
+	
+	const {title, text = note.text || '', creationDate, color} = note;
+	const noteTemplate = { title, text, creationDate, color }
 
-	const NoteTemplate = {
-		title: note.title,
-		text: note.text,
-		creationDate: note.creationDate,
-		color: note.color,
-	}
+	const [newNote, setNewNote] = useState(noteTemplate)
+	const [status, setStatus] = useState('draft')
+	const [error, setError] = useState(null)
 
-	const [NewNote, setNewNote] = useState(NoteTemplate)
-	const [Status, setStatus] = useState('draft')
-	const [Error, setError] = useState(null)
+	const createNote = useCallback(async () => {
+		await addDoc(notesCollectionRef, newNote)
+	}, [status, notesCollectionRef])
+
+	const updateNote = useCallback(async id => {
+		const noteDoc = doc(db, 'notes', id)
+		await updateDoc(noteDoc, { ...newNote })
+	}, [status])
 
 	useEffect(() => {
-		if (Status === 'final') {
-			if (!NoteTemplate.title) {
-				NewNote.color = randomBackground()
-				const createNote = async () => {
-					await addDoc(notesCollectionRef, NewNote)
-				}
+		if (status === 'final') {
+			if (!noteTemplate.title) {
+				newNote.color = randomBackground()
 				createNote()
-			} else if ( NewNote.title !== NoteTemplate.title || NewNote.text !== NoteTemplate.text ) {
-				const updateNote = async id => {
-					const noteDoc = doc(db, 'notes', id)
-					await updateDoc(noteDoc, { ...NewNote })
-				}
+			} else if ( newNote.title !== noteTemplate.title || newNote.text !== noteTemplate.text ) {
 				updateNote(note.id)
 			}
 			handleClose()
 		}
-	}, [NewNote])
+	}, [status])
 
 	const deleteNote = async id => {
 		if (id) {
@@ -50,11 +48,13 @@ export const NoteEditor = ({ note, handleClose }) => {
 
 	const handleNote = e => {
 		e.preventDefault()
-		if (!NewNote.title && !NewNote.text) handleClose()
-		else if (!NewNote.title) return setError('Title is required!')
-
+		if (!newNote.title && !newNote.text) {
+			handleClose()
+		}
+		else if (!newNote.title) {
+			return setError('Title is required!')
+		}
 		setStatus('final')
-		if (!NewNote.text) NewNote.text = ''
 		updateCreationDate()
 	}
 
@@ -76,11 +76,11 @@ export const NoteEditor = ({ note, handleClose }) => {
 			<TitleInput
 				defaultValue={note.title}
 				placeholder='Note title'
-				onChange={e => updateTitle(e)}
+				onChange={updateTitle}
 				type='text'
 				maxLength='40'
 			/>
-			{Error ? <ErrorMsg>{Error}</ErrorMsg> : null}
+			{error ? <ErrorMsg>{error}</ErrorMsg> : null}
 			<DeleteButton
 				className='deleteBtn'
 				type='button'
@@ -92,7 +92,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 			<TextInput
 				defaultValue={note.text}
 				placeholder='Type here'
-				onChange={e => updateText(e)}
+				onChange={updateText}
 				rows='10'
 			/>
 			<CloseButton type='submit' />
