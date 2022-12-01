@@ -7,10 +7,11 @@ export const FamilyContext = React.createContext({
 })
 
 const CurrentFamilyProvider = ( {children} ) => {
-    const [activeFamily, setActiveFamily] = useState({})
+    const [activeFamily, setActiveFamily] = useState('')
     
     onAuthStateChanged(auth, (family) => {
         family ? setActiveFamily(family.uid) : setActiveFamily('')
+        debugger
     })
 
     return (
