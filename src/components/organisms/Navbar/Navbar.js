@@ -11,7 +11,6 @@ export const Navbar = () => {
 	const navigate = useNavigate()
 
 	const { activeFamily } = useContext(FamilyContext)
-	console.log(activeFamily)
 
 	const signout = () => {
 		signOut(auth)
@@ -24,15 +23,17 @@ export const Navbar = () => {
 				<img src={logoIcon} alt='Logo' />
 				FamilyPlaner
 			</Logo>
-			{(pathname !== '/signup' && pathname !== '/login') ?
-			<Navigation>
-				<StyledLink to='/' end>Dashboard</StyledLink>
-				<StyledLink to='/calendar'>Calendar</StyledLink>
-				<StyledLink to='/tasks'>Tasks</StyledLink>
-				<StyledLink to='/notes'>Notes</StyledLink>
-				<button onClick={signout}>Wyloguj</button>
-			</Navigation>
-			: null}
+			{pathname !== '/signup' && pathname !== '/login' ? (
+				<Navigation>
+					<StyledLink to='/' end>
+						Dashboard
+					</StyledLink>
+					<StyledLink to='/calendar'>Calendar</StyledLink>
+					<StyledLink to='/tasks'>Tasks</StyledLink>
+					<StyledLink to='/notes'>Notes</StyledLink>
+					<button onClick={signout}>Wyloguj</button>
+				</Navigation>
+			) : null}
 		</Wrapper>
 	)
 }

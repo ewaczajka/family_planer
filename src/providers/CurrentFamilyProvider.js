@@ -1,24 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from 'firebase-config'
 
 export const FamilyContext = React.createContext({
-    activeFamily: '',
+	activeFamily: '',
 })
 
-const CurrentFamilyProvider = ( {children} ) => {
-    const [activeFamily, setActiveFamily] = useState('')
-    
-    onAuthStateChanged(auth, (family) => {
-        family ? setActiveFamily(family.uid) : setActiveFamily('')
-        debugger
-    })
+export const CurrentFamilyProvider = ({ children }) => {
+	const [activeFamily, setActiveFamily] = useState('')
+	const [isLoading, setIsLoading] = useState(true)
 
-    return (
-        <FamilyContext.Provider value={{activeFamily}}>
-            {children}
-        </FamilyContext.Provider>
-    ) 
+	useEffect(() => {
+		onAuthStateChanged(auth, family => {
+			family ? setActiveFamily(family.uid) : setActiveFamily('')
+			setIsLoading(false)
+		})
+	}, [])
+
+	return (
+		<FamilyContext.Provider value={{ activeFamily }}>
+			{isLoading ? null : children}
+		</FamilyContext.Provider>
+	)
 }
-
-export default CurrentFamilyProvider
