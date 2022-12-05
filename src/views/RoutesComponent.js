@@ -6,6 +6,7 @@ import { TasksSection } from 'components/organisms/TasksSection/TasksSection'
 import { NotesSection } from 'components/organisms/NotesSection/NotesSection'
 import { SignUp } from 'views/SignUp/SignUp'
 import { LogIn } from 'views/LogIn/LogIn'
+import { FamilyMembers } from 'views/FamilyMembers/FamilyMembers'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 
 export const RoutesComponent = () => {
@@ -37,10 +38,15 @@ export const RoutesComponent = () => {
 					activeFamily ? <NotesSection /> : <Navigate replace to='/login' />
 				}
 			/>
+			<Route
+				path='/family'
+				element={
+					activeFamily ? <FamilyMembers /> : <Navigate replace to='/login' />
+				}
+			/>
 			<Route path='/signup' element={<SignUp />} />
 			<Route path='/login' element={<LogIn />} />
 
-			{/* <Route path='/selectUser' element={<SelectUser />} /> */}
 		</Routes>
 	)
 }

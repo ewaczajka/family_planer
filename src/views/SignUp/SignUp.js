@@ -16,7 +16,7 @@ export const SignUp = () => {
 		try {
 			const family = await createUserWithEmailAndPassword(auth, email, password)
 			if (family) {
-				navigate('/')
+				navigate('/family')
 			}
 		} catch (error) {
 			setError(error.message)

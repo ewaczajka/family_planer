@@ -16,7 +16,7 @@ export const LogIn = () => {
 		try {
 			const family = await signInWithEmailAndPassword(auth, email, password)
 			if (family) {
-				navigate('/')
+				navigate('/family')
 			}
 		} catch (error) {
 			setError(error.message)

@@ -17,6 +17,10 @@ export const Navbar = () => {
 		navigate('/login')
 	}
 
+	const showFamily = () => {
+		navigate('/family')
+	}
+
 	return (
 		<Wrapper>
 			<Logo>
@@ -32,6 +36,7 @@ export const Navbar = () => {
 					<StyledLink to='/tasks'>Tasks</StyledLink>
 					<StyledLink to='/notes'>Notes</StyledLink>
 					<button onClick={signout}>Wyloguj</button>
+					<button onClick={showFamily}>Family</button>
 				</Navigation>
 			) : null}
 		</Wrapper>
