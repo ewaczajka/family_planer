@@ -11,10 +11,11 @@ export const CurrentFamilyProvider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		onAuthStateChanged(auth, family => {
+		const unsubscribe = onAuthStateChanged(auth, family => {
 			family ? setActiveFamily(family.uid) : setActiveFamily('')
 			setIsLoading(false)
 		})
+		return () => unsubscribe()
 	}, [])
 
 	return (
