@@ -15,10 +15,12 @@ import { UserField } from 'components/molecules/UserField/UserField'
 import { UserEditor } from 'components/molecules/UserEditor/UserEditor'
 import { UserAddField } from 'components/molecules/UserAddField/UserAddField'
 import { theme } from 'assets/styles/theme'
+import { useNavigate } from 'react-router-dom'
 
 export const FamilyMembers = () => {
 	const usersCollectionRef = collection(db, 'members')
 	const { activeFamily } = useContext(FamilyContext)
+	const navigate = useNavigate()
 
 	const initialValues = {
 		currentUser: { familyID: activeFamily, color: theme.colors.gray },
@@ -100,6 +102,11 @@ export const FamilyMembers = () => {
 		return LogoLetters.join('').toUpperCase()
 	}
 
+	const selectUser = (id) => {
+		navigate('/')
+		// how to export user ID ??
+	}
+
 	return (
 		<Wrapper>
 			{users.map(user =>
@@ -112,6 +119,7 @@ export const FamilyMembers = () => {
 							color={user.color}
 							editUser={editUser}
 							logoLetters={getLogoLetters(user.name)}
+							selectUser={selectUser}
 						/>
 					) : (
 						<UserEditor
