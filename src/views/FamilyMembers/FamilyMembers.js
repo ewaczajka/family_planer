@@ -9,6 +9,8 @@ import {
 	deleteDoc,
 	onSnapshot,
 	doc,
+	query,
+	where,
 } from 'firebase/firestore'
 import { Wrapper } from './FamilyMembers.styles'
 import { UserField } from 'components/molecules/UserField/UserField'
@@ -18,8 +20,10 @@ import { theme } from 'assets/styles/theme'
 import { useNavigate } from 'react-router-dom'
 
 export const FamilyMembers = () => {
-	const usersCollectionRef = collection(db, 'members')
 	const { activeFamily } = useContext(FamilyContext)
+	const usersCollectionRef = collection(db, 'members')
+	const q = query(usersCollectionRef, where('familyID', '==', activeFamily))
+
 	const navigate = useNavigate()
 
 	const initialValues = {
@@ -37,7 +41,7 @@ export const FamilyMembers = () => {
 
 	useEffect(() => {
 		const getUsers = async () => {
-			const data = await getDocs(usersCollectionRef)
+			const data = await getDocs(q)
 			setUsers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
 		}
 		onSnapshot(usersCollectionRef, () => {
@@ -102,7 +106,7 @@ export const FamilyMembers = () => {
 		return LogoLetters.join('').toUpperCase()
 	}
 
-	const selectUser = (id) => {
+	const selectUser = id => {
 		navigate('/')
 		// how to export user ID ??
 	}
@@ -110,32 +114,30 @@ export const FamilyMembers = () => {
 	return (
 		<Wrapper>
 			{users.map(user =>
-				user.familyID === activeFamily ? (
-					editing !== user.id ? (
-						<UserField
-							key={user.id}
-							id={user.id}
-							name={user.name}
-							color={user.color}
-							editUser={editUser}
-							logoLetters={getLogoLetters(user.name)}
-							selectUser={selectUser}
-						/>
-					) : (
-						<UserEditor
-							key={user.id}
-							id={user.id}
-							name={user.name}
-							deleteUser={deleteUser}
-							handleName={handleName}
-							handleColor={handleColor}
-							selectedColor={selectedColor}
-							saveUser={saveUser}
-							error={error}
-							logoLetters={getLogoLetters(currentUser.name)}
-						/>
-					)
-				) : null
+				editing !== user.id ? (
+					<UserField
+						key={user.id}
+						id={user.id}
+						name={user.name}
+						color={user.color}
+						editUser={editUser}
+						logoLetters={getLogoLetters(user.name)}
+						selectUser={selectUser}
+					/>
+				) : (
+					<UserEditor
+						key={user.id}
+						id={user.id}
+						name={user.name}
+						deleteUser={deleteUser}
+						handleName={handleName}
+						handleColor={handleColor}
+						selectedColor={selectedColor}
+						saveUser={saveUser}
+						error={error}
+						logoLetters={getLogoLetters(currentUser.name)}
+					/>
+				)
 			)}
 			{creating ? (
 				<UserEditor
