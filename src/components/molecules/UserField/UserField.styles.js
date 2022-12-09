@@ -24,4 +24,5 @@ export const UserName = styled.p`
 	font-size: ${({ theme }) => theme.fontSize.l};
 	font-weight: bold;
 	margin: 15px;
+	text-align: center;
 `

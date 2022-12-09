@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { AddBtnLogo, BigPlus, AddBtnText } from './UserAddField.styles'
 
-export const UserAddBtn = () => {
+export const UserAddField = ({ createNewUser }) => {
 	return (
 		<UserWrapper>
-			<AddBtnLogo as='button'>
+			<AddBtnLogo as='button' onClick={createNewUser}>
 				<BigPlus>
 					<FontAwesomeIcon icon={faPlus} />
 				</BigPlus>

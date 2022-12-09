@@ -7,6 +7,10 @@ export const UserNameInput = styled(TransparentInput)`
 	text-align: center;
 	margin: 15px;
 	font-weight: bold;
+	
+	::placeholder {
+		font-weight: normal;
+	}
 `
 
 export const ColorSelector = styled.input`
@@ -43,7 +47,19 @@ export const StyledCloseButton = styled.button`
 	border-radius: 50%;
 	font-size: ${({ theme }) => theme.fontSize.xs};
 	background-color: ${({ theme }) => theme.colors.lightGray};
+	pointer-events: auto;
 	cursor: pointer;
 	border: none;
 	margin: auto;
+`
+
+export const SaveButton = styled.button`
+	font-size: ${({ theme }) => theme.fontSize.xs};
+	color: ${({ theme }) => theme.colors.white};
+	border-right: 1px solid ${({ theme }) => theme.colors.borderGray};
+	padding: 8px 10px 8px 8px;
+	background: ${({ theme }) => theme.background.purple};
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
 `
