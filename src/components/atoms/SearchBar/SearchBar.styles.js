@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput.styles'
 
 export const Wrapper = styled.div`
 	flex: 1 1 0;
@@ -10,15 +11,6 @@ export const Wrapper = styled.div`
 	}
 `
 
-export const StyledSearchBar = styled.input`
+export const StyledSearchBar = styled(TransparentInput)`
 	font-size: ${({ theme }) => theme.fontSize.xs};
-	color: ${({ theme }) => theme.colors.white};
-	border: none;
-	background-color: transparent;
-	outline: none;
-
-	::placeholder {
-		color: ${({ theme }) => theme.colors.lightGray};
-		font-style: italic;
-	}
 `

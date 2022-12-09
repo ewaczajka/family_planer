@@ -8,38 +8,29 @@ import {
 	updateDoc,
 	deleteDoc,
 	onSnapshot,
+	doc,
 } from 'firebase/firestore'
 import { Wrapper } from './FamilyMembers.styles'
-import { User } from 'components/atoms/User/User'
+import { UserField } from 'components/molecules/UserField/UserField'
+import { UserEditor } from 'components/molecules/UserEditor/UserEditor'
+import { UserAddBtn } from 'components/molecules/UserAddField/UserAddField'
 
 export const FamilyMembers = () => {
+	const usersCollectionRef = collection(db, 'members')
 	const { activeFamily } = useContext(FamilyContext)
 
-	const [users, setUsers] = useState([])
-	const usersCollectionRef = collection(db, 'members')
-
-	useEffect(() => {
-		const getUsers = async () => {
-			const data = await getDocs(usersCollectionRef)
-			setUsers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-		}
-		onSnapshot(usersCollectionRef, () => {
-			getUsers()
-		})
-	}, [])
+    const name = 'Mateusz'
+    const color = 'blue'
 
 	return (
 		<Wrapper>
-			{users.map(user => (
-				<User
-					key={user.id}
-					name={user.name}
-					color={user.color}
-					// deleteUser={deleteUser}
-					// editUser={editUser}
-				/>
-			))}
-			<button>Add family member</button>
+            <UserField name={name} color={color}>
+
+            </UserField>
+            <UserEditor name={name} color={color}>
+
+            </UserEditor>
+            <UserAddBtn />
 		</Wrapper>
 	)
 }
