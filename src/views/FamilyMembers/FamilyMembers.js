@@ -18,11 +18,13 @@ import { UserEditor } from 'components/molecules/UserEditor/UserEditor'
 import { UserAddField } from 'components/molecules/UserAddField/UserAddField'
 import { theme } from 'assets/styles/theme'
 import { useNavigate } from 'react-router-dom'
+import { useActiveUser } from '../../providers/ActiveUserProvider'
 
 export const FamilyMembers = () => {
 	const { activeFamily } = useContext(FamilyContext)
 	const usersCollectionRef = collection(db, 'members')
 	const q = query(usersCollectionRef, where('familyID', '==', activeFamily))
+	const { activeUser, setActiveUser } = useActiveUser()
 
 	const navigate = useNavigate()
 
@@ -108,7 +110,7 @@ export const FamilyMembers = () => {
 
 	const selectUser = id => {
 		navigate('/')
-		// how to export user ID ??
+		setActiveUser(id)
 	}
 
 	return (
