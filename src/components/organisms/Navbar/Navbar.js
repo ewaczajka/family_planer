@@ -13,10 +13,10 @@ export const Navbar = () => {
 
 	const { activeFamily } = useContext(FamilyContext)
 	const { activeUser } = useContext(UserContext)
-	console.log(activeUser)
 
 	const signout = () => {
 		signOut(auth)
+		window.localStorage.removeItem('active_user_id')
 		navigate('/login')
 	}
 

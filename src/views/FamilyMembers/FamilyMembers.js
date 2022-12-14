@@ -109,6 +109,7 @@ export const FamilyMembers = () => {
 	}
 
 	const selectUser = id => {
+		window.localStorage.removeItem('active_user_id')
 		navigate('/')
 		setActiveUser(id)
 	}
