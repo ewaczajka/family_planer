@@ -4,9 +4,9 @@ import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icon
 import { StyledButton } from './ExpandButton.styles'
 
 export const ExpandButton = ({ routeDirection }) => {
-	return (
-		<StyledButton to={routeDirection}>
-			<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
-		</StyledButton>
-	)
+    return (
+        <StyledButton to={routeDirection}>
+            <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+        </StyledButton>
+    )
 }
