@@ -18,13 +18,16 @@ import { UserEditor } from 'components/molecules/UserEditor/UserEditor'
 import { UserAddField } from 'components/molecules/UserAddField/UserAddField'
 import { theme } from 'assets/styles/theme'
 import { useNavigate } from 'react-router-dom'
-import { useActiveUser } from '../../providers/ActiveUserProvider'
+import { useActiveUser } from 'providers/ActiveUserProvider'
+import { useLocalStorage } from 'hooks/useLocalStorage'
+import { ACTIVE_USER_ID } from 'data/consts'
 
 export const FamilyMembers = () => {
 	const { activeFamily } = useContext(FamilyContext)
 	const usersCollectionRef = collection(db, 'members')
 	const q = query(usersCollectionRef, where('familyID', '==', activeFamily))
 	const { activeUser, setActiveUser } = useActiveUser()
+	const { remove } = useLocalStorage()
 
 	const navigate = useNavigate()
 
@@ -109,7 +112,7 @@ export const FamilyMembers = () => {
 	}
 
 	const selectUser = id => {
-		window.localStorage.removeItem('active_user_id')
+		remove(ACTIVE_USER_ID)
 		navigate('/')
 		setActiveUser(id)
 	}
