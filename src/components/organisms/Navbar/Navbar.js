@@ -23,7 +23,6 @@ export const Navbar = () => {
 		remove(ACTIVE_USER_ID)
 		setActiveUser('')
 		navigate('/login')
-		debugger
 	}
 
 	const showFamily = () => {

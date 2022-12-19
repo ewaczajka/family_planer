@@ -14,60 +14,65 @@ export const RoutesComponent = () => {
 	const { activeFamily } = useContext(FamilyContext)
 	const { activeUser } = useContext(UserContext)
 
+	const RouteElement = ({ activeFamily, activeUser, children }) => {
+		return activeUser ? (
+			children
+		) : activeFamily ? (
+			<Navigate replace to='/family' />
+		) : (
+			<Navigate replace to='/login' />
+		)
+	}
 	return (
 		<Routes>
 			<Route
 				path='/'
 				element={
-					activeUser ? (
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
 						<Dashboard />
-					) : activeFamily ? (
-						<Navigate replace to='/family' />
-					) : (
-						<Navigate replace to='/login' />
-					)
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/calendar'
 				element={
-					activeUser ? (
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
 						<CalendarSection />
-					) : activeFamily ? (
-						<Navigate replace to='/family' />
-					) : (
-						<Navigate replace to='/login' />
-					)
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/tasks'
 				element={
-					activeUser ? (
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
 						<TasksSection />
-					) : activeFamily ? (
-						<Navigate replace to='/family' />
-					) : (
-						<Navigate replace to='/login' />
-					)
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/notes'
 				element={
-					activeUser ? (
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
 						<NotesSection />
-					) : activeFamily ? (
-						<Navigate replace to='/family' />
-					) : (
-						<Navigate replace to='/login' />
-					)
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/family'
 				element={
-					activeFamily ? <FamilyMembers /> : <Navigate replace to='/login' />
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
+						<FamilyMembers />
+					</RouteElement>
 				}
 			/>
 			<Route path='/signup' element={<SignUp />} />

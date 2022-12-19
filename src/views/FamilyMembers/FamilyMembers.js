@@ -96,12 +96,12 @@ export const FamilyMembers = () => {
 		setSelectedColor(initialValues.currentUser.color)
 	}
 
-	const handleName = e => {
+	const handleChangeName = e => {
 		setCurrentUser(prevState => ({ ...prevState, name: e.target.value }))
 		setError('')
 	}
 
-	const handleColor = e => {
+	const handleChangeColor = e => {
 		setCurrentUser(prevState => ({ ...prevState, color: e.target.value }))
 		setSelectedColor(e.target.value)
 	}
@@ -136,8 +136,8 @@ export const FamilyMembers = () => {
 						id={user.id}
 						name={user.name}
 						deleteUser={deleteUser}
-						handleName={handleName}
-						handleColor={handleColor}
+						handleChangeName={handleChangeName}
+						handleChangeColor={handleChangeColor}
 						selectedColor={selectedColor}
 						saveUser={saveUser}
 						error={error}
@@ -148,8 +148,8 @@ export const FamilyMembers = () => {
 			{creating ? (
 				<UserEditor
 					deleteUser={deleteUser}
-					handleName={handleName}
-					handleColor={handleColor}
+					handleChangeName={handleChangeName}
+					handleChangeColor={handleChangeColor}
 					selectedColor={selectedColor}
 					saveUser={saveUser}
 					error={error}

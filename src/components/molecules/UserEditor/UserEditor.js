@@ -16,8 +16,8 @@ export const UserEditor = ({
 	name,
 	selectedColor,
 	deleteUser,
-	handleName,
-	handleColor,
+	handleChangeName,
+	handleChangeColor,
 	saveUser,
 	error,
 	logoLetters,
@@ -28,7 +28,7 @@ export const UserEditor = ({
 				<span>{logoLetters}</span>
 				<ColorSelector
 					type='color'
-					onChange={handleColor}
+					onChange={handleChangeColor}
 					defaultValue={selectedColor}
 				/>
 				<RoundedMargin>
@@ -40,7 +40,7 @@ export const UserEditor = ({
 			<UserNameInput
 				placeholder='Name...'
 				defaultValue={name}
-				onChange={handleName}
+				onChange={handleChangeName}
 			/>
 			{error ? (
 				<p>{error}</p>
