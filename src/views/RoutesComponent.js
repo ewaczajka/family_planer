@@ -9,20 +9,12 @@ import { LogIn } from 'views/LogIn/LogIn'
 import { FamilyMembers } from 'views/FamilyMembers/FamilyMembers'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 import { UserContext } from 'providers/ActiveUserProvider'
+import { RouteElement } from 'components/molecules/RouteElement/RouteElement'
 
 export const RoutesComponent = () => {
 	const { activeFamily } = useContext(FamilyContext)
 	const { activeUser } = useContext(UserContext)
 
-	const RouteElement = ({ activeFamily, activeUser, children }) => {
-		return activeUser ? (
-			children
-		) : activeFamily ? (
-			<Navigate replace to='/family' />
-		) : (
-			<Navigate replace to='/login' />
-		)
-	}
 	return (
 		<Routes>
 			<Route
@@ -68,11 +60,11 @@ export const RoutesComponent = () => {
 			<Route
 				path='/family'
 				element={
-					<RouteElement
-						activeFamily={activeFamily}
-						activeUser={activeUser}>
+					activeFamily ? (
 						<FamilyMembers />
-					</RouteElement>
+					) : (
+						<Navigate replace to='/login' />
+					)
 				}
 			/>
 			<Route path='/signup' element={<SignUp />} />
