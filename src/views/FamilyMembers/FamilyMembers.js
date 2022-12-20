@@ -1,17 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
-import { db } from 'firebase-config'
-import {
-	collection,
-	getDocs,
-	addDoc,
-	updateDoc,
-	deleteDoc,
-	onSnapshot,
-	doc,
-	query,
-	where,
-} from 'firebase/firestore'
 import { Wrapper } from './FamilyMembers.styles'
 import { UserField } from 'components/molecules/UserField/UserField'
 import { UserEditor } from 'components/molecules/UserEditor/UserEditor'
@@ -20,14 +8,21 @@ import { theme } from 'assets/styles/theme'
 import { useNavigate } from 'react-router-dom'
 import { useActiveUser } from 'providers/ActiveUserProvider'
 import { useLocalStorage } from 'hooks/useLocalStorage'
+import { FamilyMembersQueries } from './FamilyMembersQueries'
 import { ACTIVE_USER_ID } from 'data/consts'
 
 export const FamilyMembers = () => {
 	const { activeFamily } = useContext(FamilyContext)
-	const usersCollectionRef = collection(db, 'members')
-	const q = query(usersCollectionRef, where('familyID', '==', activeFamily))
+
 	const { activeUser, setActiveUser } = useActiveUser()
 	const { remove } = useLocalStorage()
+	const {
+		users,
+		getUsersQuery,
+		deleteUserQuery,
+		updateUserQuery,
+		createUserQuery,
+	} = FamilyMembersQueries()
 
 	const navigate = useNavigate()
 
@@ -35,7 +30,6 @@ export const FamilyMembers = () => {
 		currentUser: { familyID: activeFamily, color: theme.colors.gray },
 	}
 
-	const [users, setUsers] = useState([])
 	const [editing, setEditing] = useState(false)
 	const [creating, setCreating] = useState(false)
 	const [currentUser, setCurrentUser] = useState(initialValues.currentUser)
@@ -45,19 +39,12 @@ export const FamilyMembers = () => {
 	)
 
 	useEffect(() => {
-		const getUsers = async () => {
-			const data = await getDocs(q)
-			setUsers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-		}
-		onSnapshot(usersCollectionRef, () => {
-			getUsers()
-		})
+		getUsersQuery()
 	}, [])
 
-	const deleteUser = async id => {
+	const deleteUser = id => {
 		if (id) {
-			const userDoc = doc(db, 'members', id)
-			await deleteDoc(userDoc)
+			deleteUserQuery(id)
 		} else {
 			setCreating(false)
 		}
@@ -69,11 +56,10 @@ export const FamilyMembers = () => {
 		} else {
 			if (editing) {
 				setEditing(false)
-				const userDoc = doc(db, 'members', id)
-				await updateDoc(userDoc, { ...currentUser })
+				updateUserQuery(id, currentUser)
 			} else if (creating) {
 				setCreating(false)
-				await addDoc(usersCollectionRef, currentUser)
+				createUserQuery(currentUser)
 			}
 			setCurrentUser(initialValues.currentUser)
 			setSelectedColor(initialValues.currentUser.color)
@@ -82,7 +68,11 @@ export const FamilyMembers = () => {
 
 	const editUser = (id, name, color) => {
 		setEditing(id)
-		setCurrentUser(prevState => ({ ...prevState, name: name, color: color }))
+		setCurrentUser(prevState => ({
+			...prevState,
+			name: name,
+			color: color,
+		}))
 		setSelectedColor(color)
 		setCreating(false)
 		setError('')
@@ -153,7 +143,9 @@ export const FamilyMembers = () => {
 					selectedColor={selectedColor}
 					saveUser={saveUser}
 					error={error}
-					logoLetters={currentUser.name ? getLogoLetters(currentUser.name) : ''}
+					logoLetters={
+						currentUser.name ? getLogoLetters(currentUser.name) : ''
+					}
 				/>
 			) : null}
 
