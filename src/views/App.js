@@ -5,6 +5,7 @@ import { MainTemplate } from 'components/templates/MainTemplate'
 import { GlobalStyle } from 'assets/styles/globalStyle'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CurrentFamilyProvider } from 'providers/CurrentFamilyProvider'
+import { ActiveUserProvider } from '../providers/ActiveUserProvider'
 import { RoutesComponent } from './RoutesComponent'
 
 const App = () => {
@@ -13,9 +14,11 @@ const App = () => {
 			<ThemeProvider theme={theme}>
 				<GlobalStyle />
 				<CurrentFamilyProvider>
-					<MainTemplate>
-						<RoutesComponent />
-					</MainTemplate>
+					<ActiveUserProvider>
+						<MainTemplate>
+							<RoutesComponent />
+						</MainTemplate>
+					</ActiveUserProvider>
 				</CurrentFamilyProvider>
 			</ThemeProvider>
 		</Router>

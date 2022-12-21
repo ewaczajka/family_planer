@@ -5,15 +5,23 @@ import { Wrapper, Logo, Navigation, StyledLink } from './Navbar.styles'
 import { signOut } from 'firebase/auth'
 import { auth } from 'firebase-config'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
+import { UserContext } from 'providers/ActiveUserProvider'
+import { useLocalStorage } from 'hooks/useLocalStorage'
+import { ACTIVE_USER_ID } from 'data/consts'
 
 export const Navbar = () => {
 	const pathname = useLocation().pathname
 	const navigate = useNavigate()
 
+	const { remove } = useLocalStorage()
+
 	const { activeFamily } = useContext(FamilyContext)
+	const { activeUser, setActiveUser } = useContext(UserContext)
 
 	const signout = () => {
 		signOut(auth)
+		remove(ACTIVE_USER_ID)
+		setActiveUser('')
 		navigate('/login')
 	}
 

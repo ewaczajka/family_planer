@@ -8,45 +8,67 @@ import { SignUp } from 'views/SignUp/SignUp'
 import { LogIn } from 'views/LogIn/LogIn'
 import { FamilyMembers } from 'views/FamilyMembers/FamilyMembers'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
+import { UserContext } from 'providers/ActiveUserProvider'
+import { RouteElement } from 'components/molecules/RouteElement/RouteElement'
 
 export const RoutesComponent = () => {
 	const { activeFamily } = useContext(FamilyContext)
+	const { activeUser } = useContext(UserContext)
 
 	return (
 		<Routes>
 			<Route
 				path='/'
 				element={
-					activeFamily ? <Dashboard /> : <Navigate replace to='/login' />
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
+						<Dashboard />
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/calendar'
 				element={
-					activeFamily ? <CalendarSection /> : <Navigate replace to='/login' />
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
+						<CalendarSection />
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/tasks'
 				element={
-					activeFamily ? <TasksSection /> : <Navigate replace to='/login' />
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
+						<TasksSection />
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/notes'
 				element={
-					activeFamily ? <NotesSection /> : <Navigate replace to='/login' />
+					<RouteElement
+						activeFamily={activeFamily}
+						activeUser={activeUser}>
+						<NotesSection />
+					</RouteElement>
 				}
 			/>
 			<Route
 				path='/family'
 				element={
-					activeFamily ? <FamilyMembers /> : <Navigate replace to='/login' />
+					activeFamily ? (
+						<FamilyMembers />
+					) : (
+						<Navigate replace to='/login' />
+					)
 				}
 			/>
 			<Route path='/signup' element={<SignUp />} />
 			<Route path='/login' element={<LogIn />} />
-
 		</Routes>
 	)
 }
