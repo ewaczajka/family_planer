@@ -5,11 +5,11 @@ import { TasksSection } from 'components/organisms/TasksSection/TasksSection'
 import { Wrapper } from './Dashboard.styles'
 
 export const Dashboard = () => {
-	return (
-		<Wrapper>
-			<CalendarSection />
-			<TasksSection />
-			<NotesSection />
-		</Wrapper>
-	)
+    return (
+        <Wrapper>
+            <CalendarSection />
+            <TasksSection />
+            <NotesSection />
+        </Wrapper>
+    )
 }

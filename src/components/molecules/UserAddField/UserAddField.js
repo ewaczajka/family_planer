@@ -5,14 +5,14 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { AddBtnLogo, BigPlus, AddBtnText } from './UserAddField.styles'
 
 export const UserAddField = ({ createNewUser }) => {
-	return (
-		<UserWrapper>
-			<AddBtnLogo as='button' onClick={createNewUser}>
-				<BigPlus>
-					<FontAwesomeIcon icon={faPlus} />
-				</BigPlus>
-				<AddBtnText>Add member</AddBtnText>
-			</AddBtnLogo>
-		</UserWrapper>
-	)
+    return (
+        <UserWrapper>
+            <AddBtnLogo as="button" onClick={createNewUser}>
+                <BigPlus>
+                    <FontAwesomeIcon icon={faPlus} />
+                </BigPlus>
+                <AddBtnText>Add member</AddBtnText>
+            </AddBtnLogo>
+        </UserWrapper>
+    )
 }
