@@ -6,17 +6,22 @@ import { signOut } from 'firebase/auth'
 import { auth } from 'firebase-config'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 import { UserContext } from 'providers/ActiveUserProvider'
+import { useLocalStorage } from 'hooks/useLocalStorage'
+import { ACTIVE_USER_ID } from 'data/consts'
 
 export const Navbar = () => {
     const pathname = useLocation().pathname
     const navigate = useNavigate()
 
+    const { remove } = useLocalStorage()
+
     const { activeFamily } = useContext(FamilyContext)
-    const { activeUser } = useContext(UserContext)
+    const { activeUser, setActiveUser } = useContext(UserContext)
 
     const signout = () => {
         signOut(auth)
-        window.localStorage.removeItem('active_user_id')
+        remove(ACTIVE_USER_ID)
+        setActiveUser('')
         navigate('/login')
     }
 

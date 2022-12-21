@@ -9,6 +9,7 @@ import { LogIn } from 'views/LogIn/LogIn'
 import { FamilyMembers } from 'views/FamilyMembers/FamilyMembers'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 import { UserContext } from 'providers/ActiveUserProvider'
+import { RouteElement } from 'components/molecules/RouteElement/RouteElement'
 
 export const RoutesComponent = () => {
     const { activeFamily } = useContext(FamilyContext)
@@ -19,49 +20,45 @@ export const RoutesComponent = () => {
             <Route
                 path="/"
                 element={
-                    activeUser ? (
+                    <RouteElement
+                        activeFamily={activeFamily}
+                        activeUser={activeUser}
+                    >
                         <Dashboard />
-                    ) : activeFamily ? (
-                        <Navigate replace to="/family" />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )
+                    </RouteElement>
                 }
             />
             <Route
                 path="/calendar"
                 element={
-                    activeUser ? (
+                    <RouteElement
+                        activeFamily={activeFamily}
+                        activeUser={activeUser}
+                    >
                         <CalendarSection />
-                    ) : activeFamily ? (
-                        <Navigate replace to="/family" />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )
+                    </RouteElement>
                 }
             />
             <Route
                 path="/tasks"
                 element={
-                    activeUser ? (
+                    <RouteElement
+                        activeFamily={activeFamily}
+                        activeUser={activeUser}
+                    >
                         <TasksSection />
-                    ) : activeFamily ? (
-                        <Navigate replace to="/family" />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )
+                    </RouteElement>
                 }
             />
             <Route
                 path="/notes"
                 element={
-                    activeUser ? (
+                    <RouteElement
+                        activeFamily={activeFamily}
+                        activeUser={activeUser}
+                    >
                         <NotesSection />
-                    ) : activeFamily ? (
-                        <Navigate replace to="/family" />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )
+                    </RouteElement>
                 }
             />
             <Route

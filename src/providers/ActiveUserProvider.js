@@ -1,19 +1,20 @@
 import { createContext, useContext, useState } from 'react'
+import { useLocalStorage } from 'hooks/useLocalStorage'
+import { ACTIVE_USER_ID } from 'data/consts'
 
 export const UserContext = createContext({
     activeUser: '',
 })
 
-const KEY = 'active_user_id'
-
 export const ActiveUserProvider = ({ children }) => {
-    const activeUserId = window.localStorage.getItem(KEY) || ''
+    const { add, get } = useLocalStorage()
+    const activeUserId = get(ACTIVE_USER_ID) || ''
     const [user, setUser] = useState(activeUserId)
 
     const setUserId = userId => {
+        setUser(userId)
         if (userId) {
-            setUser(userId)
-            window.localStorage.setItem(KEY, userId)
+            add(ACTIVE_USER_ID, userId)
         }
     }
 
