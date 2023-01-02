@@ -20,7 +20,7 @@ export const Notes = ({ handleOpen, searchPhrase }) => {
                         key={note.id}
                         title={note.title}
                         text={note.text}
-                        date={note.creationDate.seconds * 1000}
+                        date={note.modificationDate.seconds * 1000}
                         color={note.color}
                         onClick={() => handleOpen(note)}
                     />

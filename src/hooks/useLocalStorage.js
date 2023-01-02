@@ -8,7 +8,7 @@ export const useLocalStorage = () => {
     }
 
     const get = key => {
-        window.localStorage.getItem(key)
+        return window.localStorage.getItem(key)
     }
 
     return {
