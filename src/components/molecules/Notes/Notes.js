@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Note } from 'components/atoms/Note/Note'
 import { Wrapper } from './Notes.styles'
-import { db } from 'firebase-config'
-import {
-    collection,
-    query,
-    orderBy,
-    getDocs,
-    onSnapshot,
-} from 'firebase/firestore'
+import { NotesQueries } from './NotesQueries'
 
 export const Notes = ({ handleOpen, searchPhrase }) => {
-    const [notes, setNotes] = useState([])
-    const notesCollectionRef = collection(db, 'notes')
-    const q = query(notesCollectionRef, orderBy('creationDate', 'desc'))
+    const { notes, getNotesQuery } = NotesQueries()
 
     useEffect(() => {
-        const getNotes = async () => {
-            const data = await getDocs(q)
-            setNotes(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-        }
-        onSnapshot(notesCollectionRef, () => {
-            getNotes()
-        })
+        getNotesQuery()
     }, [])
 
     return (
