@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Wrapper } from './AutenticationBox.styles'
 import { Title } from 'components/atoms/Title/Title'
+import { authErrorMsg } from 'helpers/authErrorMsg'
 
 export const AuthenticationBox = ({
     title,
@@ -35,7 +36,7 @@ export const AuthenticationBox = ({
                 />
                 <button type="submit">{btnText}</button>
             </form>
-            {error ? <p>{error}</p> : null}
+            {error ? <p>{authErrorMsg(error)}</p> : null}
             <button type="button" onClick={() => navigate(changeRedirect)}>
                 {redirectBtnText}
             </button>
