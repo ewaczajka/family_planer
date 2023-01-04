@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    signOut,
+} from 'firebase/auth'
 import { auth } from 'firebase-config'
 import { AuthenticationBox } from 'components/molecules/AuthenticationBox/AuthenticationBox'
 
@@ -8,9 +11,8 @@ export const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-
-    const navigate = useNavigate()
-
+    const [verificationMsg, setVerificationMsg] = useState('')
+    
     const signup = async e => {
         e.preventDefault()
         try {
@@ -20,7 +22,9 @@ export const SignUp = () => {
                 password,
             )
             if (family) {
-                navigate('/family')
+                sendEmailVerification(auth.currentUser)
+                    .then(setVerificationMsg('Email with verification link was send. Please confirm and log in to your account.'))
+                    .then(signOut(auth))
             }
         } catch (error) {
             setError(error.message)
@@ -31,6 +35,7 @@ export const SignUp = () => {
         setEmail(e.target.value)
         setError(null)
     }
+
     const handlePassword = e => {
         setPassword(e.target.value)
         setError(null)
@@ -46,6 +51,7 @@ export const SignUp = () => {
             error={error}
             changeRedirect="/login"
             redirectBtnText="Have an account? Log in"
+            verificationMsg={verificationMsg}
         />
     )
 }

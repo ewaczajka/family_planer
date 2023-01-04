@@ -97,8 +97,10 @@ export const FamilyMembers = () => {
     }
 
     const getLogoLetters = name => {
-        const LogoLetters = name.match(/\b(\w)/g)
-        return LogoLetters.join('').toUpperCase()
+        const LogoLetters = name.match(/^.|(?<= )./g)
+        if (LogoLetters) {
+            return LogoLetters.join('').toUpperCase()
+        }
     }
 
     const selectUser = id => {

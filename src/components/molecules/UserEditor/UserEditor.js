@@ -41,6 +41,7 @@ export const UserEditor = ({
                 placeholder="Name..."
                 defaultValue={name}
                 onChange={handleChangeName}
+                maxLength="10"
             />
             {error ? (
                 <p>{error}</p>
