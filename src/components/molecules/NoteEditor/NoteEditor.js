@@ -1,60 +1,65 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 import { StyledNoteEditor, TitleInput, TextInput } from './NoteEditor.styles'
 import { db } from 'firebase-config'
-import {
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    Timestamp,
-    doc,
-} from 'firebase/firestore'
+import { Timestamp } from 'firebase/firestore'
 import { CloseButton } from 'components/atoms/CloseButton/CloseButton'
 import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton'
 import { ErrorMsg } from 'components/atoms/ErrorMsg/ErrorMsg'
 import { randomBackground } from 'helpers/randomBackground'
+import { FamilyContext } from 'providers/CurrentFamilyProvider'
+import { UserContext } from 'providers/ActiveUserProvider'
+import { NotesQueries } from 'components/molecules/Notes/NotesQueries'
 
 export const NoteEditor = ({ note, handleClose }) => {
-    const notesCollectionRef = collection(db, 'notes')
+    const { activeFamily } = useContext(FamilyContext)
+    const { activeUser } = useContext(UserContext)
 
-    const { title, text = note.text || '', creationDate, color } = note
-    const noteTemplate = { title, text, creationDate, color }
+    const { deleteNoteQuery, updateNoteQuery, createNoteQuery } = NotesQueries()
+
+    const {
+        title,
+        text = note.text || '',
+        creationDate,
+        modificationDate,
+        createdBy,
+        modifiedBy,
+        color,
+        familyID = activeFamily,
+    } = note
+
+    const noteTemplate = {
+        title,
+        text,
+        creationDate,
+        modificationDate,
+        createdBy,
+        modifiedBy,
+        color,
+        familyID,
+    }
 
     const [newNote, setNewNote] = useState(noteTemplate)
     const [status, setStatus] = useState('draft')
     const [error, setError] = useState(null)
 
-    const createNote = useCallback(async () => {
-        await addDoc(notesCollectionRef, newNote)
-    }, [status, notesCollectionRef])
-
-    const updateNote = useCallback(
-        async id => {
-            const noteDoc = doc(db, 'notes', id)
-            await updateDoc(noteDoc, { ...newNote })
-        },
-        [status],
-    )
-
     useEffect(() => {
         if (status === 'final') {
-            if (!noteTemplate.title) {
+            if (!note.id) {
                 newNote.color = randomBackground()
-                createNote()
+                createNoteQuery(newNote)
             } else if (
                 newNote.title !== noteTemplate.title ||
                 newNote.text !== noteTemplate.text
             ) {
-                updateNote(note.id)
+                updateNoteQuery(note.id, newNote)
             }
             handleClose()
         }
     }, [status])
 
-    const deleteNote = async id => {
+    const deleteNote = id => {
         if (id) {
-            const noteDoc = doc(db, 'notes', id)
-            await deleteDoc(noteDoc)
+            deleteNoteQuery(id)
         }
         handleClose()
     }
@@ -67,7 +72,7 @@ export const NoteEditor = ({ note, handleClose }) => {
             return setError('Title is required!')
         }
         setStatus('final')
-        updateCreationDate()
+        updateModificationData()
     }
 
     const updateTitle = e => {
@@ -79,11 +84,22 @@ export const NoteEditor = ({ note, handleClose }) => {
         setNewNote(prevState => ({ ...prevState, text: e.target.value }))
     }
 
-    const updateCreationDate = () => {
-        setNewNote(prevState => ({
-            ...prevState,
-            creationDate: Timestamp.now(),
-        }))
+    const updateModificationData = () => {
+        if (note.id) {
+            setNewNote(prevState => ({
+                ...prevState,
+                modificationDate: Timestamp.now(),
+                modifiedBy: activeUser,
+            }))
+        } else {
+            setNewNote(prevState => ({
+                ...prevState,
+                creationDate: Timestamp.now(),
+                modificationDate: Timestamp.now(),
+                createdBy: activeUser,
+                modifiedBy: activeUser,
+            }))
+        }
     }
 
     return (

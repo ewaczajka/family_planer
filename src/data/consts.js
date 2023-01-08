@@ -1,1 +1,1 @@
-export const ACTIVE_USER_ID = 'active_user_id'
+export const ACTIVE_USER_DATA = 'active_user_data'

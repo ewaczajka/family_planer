@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { UserWrapper } from 'components/atoms/UserWrapper/UserWrapper.styles'
-import { UserLogo } from 'components/atoms/UserLogo/UserLogo.styles'
 
 export const EditButton = styled.button`
     color: ${({ theme }) => theme.colors.red};
@@ -26,8 +25,4 @@ export const UserName = styled.p`
     font-weight: bold;
     margin: 15px;
     text-align: center;
-`
-
-export const UserLogoLink = styled(UserLogo)`
-    border: none;
 `

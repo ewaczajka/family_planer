@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserWrapper } from 'components/atoms/UserWrapper/UserWrapper.styles'
-import { UserLogo } from 'components/atoms/UserLogo/UserLogo.styles'
+import { UserLogo } from 'components/atoms/UserLogo/UserLogo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -24,8 +24,11 @@ export const UserEditor = ({
 }) => {
     return (
         <UserWrapper>
-            <UserLogo color={selectedColor}>
-                <span>{logoLetters}</span>
+            <UserLogo
+                size="big"
+                color={selectedColor}
+                logoLetters={logoLetters}
+            >
                 <ColorSelector
                     type="color"
                     onChange={handleChangeColor}
@@ -41,6 +44,7 @@ export const UserEditor = ({
                 placeholder="Name..."
                 defaultValue={name}
                 onChange={handleChangeName}
+                maxLength="10"
             />
             {error ? (
                 <p>{error}</p>
