@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { useLocalStorage } from 'hooks/useLocalStorage'
-import { ACTIVE_USER_ID } from 'data/consts'
+import { ACTIVE_USER_DATA } from 'data/consts'
 
 export const UserContext = createContext({
     activeUser: '',
@@ -8,19 +8,19 @@ export const UserContext = createContext({
 
 export const ActiveUserProvider = ({ children }) => {
     const { add, get } = useLocalStorage()
-    const activeUserId = get(ACTIVE_USER_ID) || ''
-    const [user, setUser] = useState(activeUserId)
+    const activeUserData = JSON.parse(get(ACTIVE_USER_DATA)) || ''
 
-    const setUserId = userId => {
-        setUser(userId)
-        if (userId) {
-            add(ACTIVE_USER_ID, userId)
+    const [user, setUser] = useState(activeUserData)
+    const setUserData = userData => {
+        setUser(userData)
+        if (userData) {
+            add(ACTIVE_USER_DATA, JSON.stringify(userData))
         }
     }
 
     return (
         <UserContext.Provider
-            value={{ activeUser: user, setActiveUser: setUserId }}
+            value={{ activeUser: user, setActiveUser: setUserData }}
         >
             {children}
         </UserContext.Provider>

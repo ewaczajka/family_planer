@@ -19,7 +19,7 @@ export const UserField = ({
                 color={color}
                 size="big"
                 as="button"
-                onClick={() => selectUser(id)}
+                onClick={() => selectUser({ id, name, color, logoLetters })}
                 logoLetters={logoLetters}
             />
             <UserName>{name}</UserName>

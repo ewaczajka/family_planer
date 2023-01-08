@@ -23,7 +23,9 @@ export const LogIn = () => {
             if (family.user.emailVerified) {
                 navigate('/family')
             } else {
-                setVerificationMsg('Please verify your email address before logging in.')
+                setVerificationMsg(
+                    'Please verify your email address before logging in.',
+                )
                 signOut(auth)
             }
         } catch (error) {

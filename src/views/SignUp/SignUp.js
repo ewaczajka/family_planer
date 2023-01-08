@@ -12,7 +12,7 @@ export const SignUp = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [verificationMsg, setVerificationMsg] = useState('')
-    
+
     const signup = async e => {
         e.preventDefault()
         try {
@@ -23,7 +23,11 @@ export const SignUp = () => {
             )
             if (family) {
                 sendEmailVerification(auth.currentUser)
-                    .then(setVerificationMsg('Email with verification link was send. Please confirm and log in to your account.'))
+                    .then(
+                        setVerificationMsg(
+                            'Email with verification link was send. Please confirm and log in to your account.',
+                        ),
+                    )
                     .then(signOut(auth))
             }
         } catch (error) {

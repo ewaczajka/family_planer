@@ -4,10 +4,10 @@ import logoIcon from 'assets/logo.png'
 import { Wrapper, Logo, Navigation, StyledLink } from './Navbar.styles'
 import { signOut } from 'firebase/auth'
 import { auth } from 'firebase-config'
-import { FamilyContext } from 'providers/CurrentFamilyProvider'
 import { UserContext } from 'providers/ActiveUserProvider'
 import { useLocalStorage } from 'hooks/useLocalStorage'
-import { ACTIVE_USER_ID } from 'data/consts'
+import { ACTIVE_USER_DATA } from 'data/consts'
+import { ActiveUserMenu } from 'components/molecules/ActiveUserMenu/ActiveUserMenu'
 
 export const Navbar = () => {
     const pathname = useLocation().pathname
@@ -15,12 +15,12 @@ export const Navbar = () => {
 
     const { remove } = useLocalStorage()
 
-    const { activeFamily } = useContext(FamilyContext)
     const { activeUser, setActiveUser } = useContext(UserContext)
+    const { color, logoLetters } = activeUser
 
-    const signout = () => {
+    const signOutFamily = () => {
         signOut(auth)
-        remove(ACTIVE_USER_ID)
+        remove(ACTIVE_USER_DATA)
         setActiveUser('')
         navigate('/login')
     }
@@ -36,16 +36,22 @@ export const Navbar = () => {
                 FamilyPlaner
             </Logo>
             {pathname !== '/signup' && pathname !== '/login' ? (
-                <Navigation>
-                    <StyledLink to="/" end>
-                        Dashboard
-                    </StyledLink>
-                    <StyledLink to="/calendar">Calendar</StyledLink>
-                    <StyledLink to="/tasks">Tasks</StyledLink>
-                    <StyledLink to="/notes">Notes</StyledLink>
-                    <button onClick={signout}>Wyloguj</button>
-                    <button onClick={showFamily}>Family</button>
-                </Navigation>
+                <>
+                    <Navigation>
+                        <StyledLink to="/" end>
+                            Dashboard
+                        </StyledLink>
+                        <StyledLink to="/calendar">Calendar</StyledLink>
+                        <StyledLink to="/tasks">Tasks</StyledLink>
+                        <StyledLink to="/notes">Notes</StyledLink>
+                    </Navigation>
+                    <ActiveUserMenu
+                        color={color}
+                        logoLetters={logoLetters}
+                        signOutFamily={signOutFamily}
+                        showFamily={showFamily}
+                    />
+                </>
             ) : null}
         </Wrapper>
     )

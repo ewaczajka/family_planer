@@ -6,7 +6,7 @@ export const LogoBackground = styled.div`
     border-radius: 50%;
     border: ${({ theme, variant }) =>
         variant === 'add' ? `3px dashed ${theme.colors.lightGray}` : 'none'};
-    font-size: 60px;
+    font-size: ${({ size }) => (size === 'big' ? '60px' : '12px')};
     position: relative;
     background: ${({ color, variant }) =>
         variant === 'add' ? 'transparent' : color};
@@ -16,6 +16,13 @@ export const LogoBackground = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    :hover {
+        > div:last-child {
+            display: flex;
+            opacity: 100%;
+        }
+    }
 `
 
 export const LogoLetters = styled.span`
