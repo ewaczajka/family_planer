@@ -12,7 +12,7 @@ export const TasksAddField = () => {
     const { activeFamily } = useContext(FamilyContext)
     const { activeUser } = useContext(UserContext)
 
-    const { createDocQuery } = useCollectionQueries('tasks', 'deadline')
+    const { createDocQuery } = useCollectionQueries('tasks', 'modificationDate')
 
     const [isReadyToSave, setIsReadyToSave] = useState(false)
 

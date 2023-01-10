@@ -6,7 +6,7 @@ import { Wrapper } from './TasksList.styles'
 export const TasksList = ({ searchPhrase, handleTask }) => {
     const { documents, getDocsQuery } = useCollectionQueries(
         'tasks',
-        'deadline',
+        'modificationDate',
     )
 
     useEffect(() => {

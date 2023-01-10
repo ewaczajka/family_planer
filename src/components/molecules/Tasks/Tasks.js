@@ -9,27 +9,35 @@ import { UserContext } from 'providers/ActiveUserProvider'
 export const Tasks = ({ searchPhrase }) => {
     const { deleteDocQuery, updateDocQuery } = useCollectionQueries(
         'tasks',
-        'deadline',
+        'modificationDate',
     )
     const { activeUser } = useContext(UserContext)
 
     const [editedTask, setEditedTask] = useState()
-    const [taskToOpen, setTaskToOpen] = useState(null)
+    const [taskToOpen, setTaskToOpen] = useState()
     const [openDetails, setOpenDetails] = useState(false)
-    //const ref = useRef(null)
+    const ref = useRef(null)
 
-    // useEffect(() => {
-    //     const handleClickOutside = e => {
-    //         if (ref.current && !ref.current.contains(e.target)) {
-    //             updateModificationData()
-    //             updateDocQuery(editedTask.id)
-    //         }
-    //     }
-    //     document.addEventListener('click', handleClickOutside, true)
-    //     return () => {
-    //         document.removeEventListener('click', handleClickOutside, true)
-    //     }
-    // }, [])
+    useEffect(() => {
+        const handleClickOutside = e => {
+            if (openDetails) {
+                if (ref.current && !ref.current.contains(e.target)) {
+                    if (JSON.stringify(editedTask) !== JSON.stringify(taskToOpen)) {
+                        console.log('5')
+                        updateModificationData()
+                        updateDocQuery(editedTask.id, editedTask)
+                    }
+                    setOpenDetails(false)
+                    setEditedTask(null)
+                    setTaskToOpen(null)
+                }
+            }
+        }
+        document.addEventListener('click', handleClickOutside, true)
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true)
+        }
+    }, [editedTask, openDetails, taskToOpen])
 
     useEffect(() => {
         if (openDetails) {
@@ -40,6 +48,10 @@ export const Tasks = ({ searchPhrase }) => {
     const handleTask = task => {
         setTaskToOpen(task)
         setOpenDetails(true)
+    }
+
+    const handleCheck = () => {
+
     }
 
     const updateModificationData = () => {
@@ -91,6 +103,7 @@ export const Tasks = ({ searchPhrase }) => {
         deleteDocQuery(taskToOpen.id)
         setOpenDetails(false)
         setEditedTask(null)
+        setTaskToOpen(null)
     }
 
     return (
@@ -98,14 +111,14 @@ export const Tasks = ({ searchPhrase }) => {
             <TasksList searchPhrase={searchPhrase} handleTask={handleTask} />
             {openDetails ? (
                 <TaskDetails
-                    // ref={ref}
+                    ref={ref}
                     task={taskToOpen}
                     handleTitleChange={handleTitleChange}
                     handleDeadlineChange={handleDeadlineChange}
                     addAssignedUser={addAssignedUser}
                     removeAssignedUser={removeAssignedUser}
                     handleExtraInfoChange={handleExtraInfoChange}
-                    //handleCheck={handleCheck}
+                    handleCheck={handleCheck}
                     deleteTask={() => deleteTask(taskToOpen.id)}
                 />
             ) : null}

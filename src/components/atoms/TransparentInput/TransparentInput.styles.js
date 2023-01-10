@@ -5,7 +5,6 @@ export const TransparentInput = styled.input`
     border: none;
     background-color: transparent;
     outline: none;
-    width: 100%;
 
     ::placeholder {
         color: ${({ theme, variant }) => variant === 'lightBackground' ? theme.colors.lineGray : theme.colors.lightGray};
