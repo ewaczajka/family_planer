@@ -3,9 +3,15 @@ import React from 'react'
 import { DeleteButton } from '../../atoms/DeleteButton/DeleteButton'
 import { UserLogo } from '../../atoms/UserLogo/UserLogo'
 import { TransparentInput } from '../../atoms/TransparentInput/TransparentInput.styles'
-import { Wrapper, Row, Checkbox, AllUsers } from './TaskDetails.styles'
+import {
+    Wrapper,
+    Row,
+    Checkbox,
+    AllUsers,
+    Placeholder,
+} from './TaskDetails.styles'
 import { FamilyMembersQueries } from 'views/FamilyMembers/FamilyMembersQueries'
-import { faCalendar, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDays, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export const TaskDetails = ({
     task,
@@ -25,23 +31,25 @@ export const TaskDetails = ({
             <Row className="twoColumns">
                 <Checkbox type="checkbox" onClick={handleCheck} />
                 <TransparentInput
+                    variant="lightBackground"
                     defaultValue={title}
                     placeholder="Task..."
                     onChange={handleTitleChange}
                 />
             </Row>
             <Row className="twoColumns">
-                <FontAwesomeIcon icon={faCalendar} />
+                <FontAwesomeIcon icon={faCalendarDays} />
                 <TransparentInput
+                    variant="lightBackground"
                     defaultValue={deadline}
                     type="date"
                     onChange={handleDeadlineChange}
                 />
             </Row>
             <Row className="twoColumns">
-                {assignedUsers
-                    ? assignedUsers.map(user => (
-                        <AllUsers>
+                {assignedUsers ? (
+                    assignedUsers.map(user => (
+                        <>
                             <UserLogo
                                 size="small"
                                 color={user.color}
@@ -49,33 +57,44 @@ export const TaskDetails = ({
                                 onClick={removeAssignedUser}
                             />
                             <span>{user.name}</span>
+                        </>
+                    ))
+                ) : (
+                    <Placeholder>Add assigned family member</Placeholder>
+                )}
+                <div className='positionRight'>
+                    <UserLogo variant="add" color="dark">
+                        <FontAwesomeIcon icon={faPlus} />
+                        <AllUsers className="hidden">
+                            {users.map(user =>
+                                !JSON.stringify(assignedUsers).includes(
+                                    user.id,
+                                ) ? (
+                                    <UserLogo
+                                        size="small"
+                                        color={user.color}
+                                        logoLetters={user.logoLetters}
+                                        onClick={addAssignedUser}
+                                    />
+                                ) : null,
+                            )}
                         </AllUsers>
-                        ))
-                    : null}
-                <UserLogo variant="add">
-                    <FontAwesomeIcon icon={faPlus} />
-                    <AllUsers className="hidden">
-                        {users.map(user =>
-                            !JSON.stringify(assignedUsers).includes(user.id) ? (
-                                <UserLogo
-                                    size="small"
-                                    color={user.color}
-                                    logoLetters={user.logoLetters}
-                                    onClick={addAssignedUser}
-                                />
-                            ) : null,
-                        )}
-                    </AllUsers>
-                </UserLogo>
+                    </UserLogo>
+                </div>
             </Row>
-            <Row>
-                <TransparentInput
-                    as="textarea"
-                    defaultValue={extraInfo}
-                    onChange={handleExtraInfoChange}
-                />
+            <Row className="flexGrow">
+                <div>
+                    <TransparentInput
+                        variant="lightBackground"
+                        as="textarea"
+                        rows="10"
+                        defaultValue={extraInfo}
+                        placeholder="Text more info here"
+                        onChange={handleExtraInfoChange}
+                    />
+                </div>
             </Row>
-            <Row>
+            <Row className="centered">
                 <DeleteButton onClick={() => deleteTask(id)}>
                     Delete Task
                 </DeleteButton>

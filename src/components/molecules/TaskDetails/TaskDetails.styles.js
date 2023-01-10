@@ -5,66 +5,65 @@ export const Wrapper = styled.div`
     height: 100%;
     max-width: 280px;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    border-radius: 5px;
     position: absolute;
     right: 0;
     top: 0;
-    padding: 0 15px;
-    background: ${({ theme }) => theme.background.beige};
     z-index: 2;
-
-    * {
-        color: ${({ theme }) => theme.colors.darkGray};
-        &:placeholder {
-            color: ${({ theme }) => theme.colors.gray};
-        }
-    }
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    background: ${({ theme }) => theme.background.beige};
+    font-size: ${({ theme }) => theme.fontSize.s};
 `
 
 export const Row = styled.div`
     min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    position: relative;
+
     :not(:last-child) {
-        border-bottom: 1px solid ${({ theme }) => theme.colors.gray};
+        border-bottom: 1px solid ${({ theme }) => theme.colors.lineGray};
+        color: ${({ theme }) => theme.colors.darkGray};
     }
 
-    .twoColumns {
+    &.twoColumns {
         display: grid;
         grid-template-columns: 35px 1fr;
+
+        > :first-child {
+            justify-self: center;
+        }
+    }
+
+    &.flexGrow {
+        flex-grow: 1;
+        > * {
+            color: blue;
+            height: 100%;
+            overflow-y: scroll;
+        }
+    }
+
+    &.centered {
+        margin: auto;
+    }
+
+    .positionRight {
+        position: absolute;
+        right: 0;
     }
 `
 
-export const AllUsers = styled.div`
-    position: absolute;
-    top: 100%;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    width: 40px;
-    border-radius: 3px;
-    background: ${({ theme }) => theme.background.beige};
+export const AllUsers = styled.div``
 
-    // .hidden {
-    //     display: none;
-    // }
-    
-    * {
-        padding: 5px;
-        :hover {
-            :after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                right: 50%;
-                transform: translate(-50%, -50%);
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                border: 1px solid ${({ theme }) => theme.colors.gray}
-                pointer-events: none;
-            }
-        }
-    }   
+export const Placeholder = styled.span`
+    color: ${({ theme }) => theme.colors.lineGray};
+    font-style: italic;
+    position: absolute;
+    left: 0;
 `
 
 export const Checkbox = styled.input``
