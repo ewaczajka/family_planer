@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const TaskBox = styled.div`
     width: 100%;
-    min-height: 35px;
+    min-height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;

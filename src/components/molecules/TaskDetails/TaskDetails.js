@@ -1,46 +1,55 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import { DeleteButton } from '../../atoms/DeleteButton/DeleteButton'
 import { UserLogo } from '../../atoms/UserLogo/UserLogo'
 import { TransparentInput } from '../../atoms/TransparentInput/TransparentInput.styles'
 import {
     Wrapper,
     Row,
-    Checkbox,
+    AssignedUser,
     AllUsers,
     Placeholder,
 } from './TaskDetails.styles'
-import { FamilyMembersQueries } from 'views/FamilyMembers/FamilyMembersQueries'
+import { Checkbox } from 'components/atoms/Checkbox/Checkbox'
 import { faCalendarDays, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FamilyMembersQueries } from 'views/FamilyMembers/FamilyMembersQueries'
 
 export const TaskDetails = forwardRef(
     (
         {
             task,
-            handleTitleChange,
-            handleDeadlineChange,
+            handleInputChange,
             addAssignedUser,
             removeAssignedUser,
-            handleExtraInfoChange,
             handleCheck,
             deleteTask,
         },
         ref,
     ) => {
-        const { users } = FamilyMembersQueries()
-        const { id, title, deadline, assignedUsers, extraInfo } = task
+        const { id, checked, title, deadline, assignedUsers, extraInfo } = task
 
-        console.log(users)
+        const { users, getUsersQuery } = FamilyMembersQueries()
+
+        const ref2 = useRef(null)
+
+        useEffect(() => {
+            getUsersQuery()
+        }, [])
+
+        const showAllUsers = () => {
+            ref2.current.classList.toggle('hidden')
+        }
 
         return (
             <Wrapper ref={ref}>
                 <Row className="twoColumns">
-                    <Checkbox type="checkbox" onClick={handleCheck} />
+                    <Checkbox type="checkbox" checked={checked} variant='dark' onChange={handleCheck} />
                     <TransparentInput
                         variant="lightBackground"
                         defaultValue={title}
                         placeholder="Task..."
-                        onChange={handleTitleChange}
+                        onChange={handleInputChange}
+                        name="title"
                     />
                 </Row>
                 <Row className="twoColumns">
@@ -49,39 +58,45 @@ export const TaskDetails = forwardRef(
                         variant="lightBackground"
                         defaultValue={deadline}
                         type="date"
-                        onChange={handleDeadlineChange}
+                        onChange={handleInputChange}
+                        name="deadline"
                     />
                 </Row>
-                <Row className="twoColumns">
+                <Row className="flexContentSize">
                     {assignedUsers ? (
                         assignedUsers.map(user => (
-                            <>
+                            <AssignedUser className="twoColumns" key={user.id}>
                                 <UserLogo
                                     size="small"
                                     color={user.color}
                                     logoLetters={user.logoLetters}
-                                    onClick={removeAssignedUser}
+                                    onClick={() => removeAssignedUser(user)}
                                 />
                                 <span>{user.name}</span>
-                            </>
+                            </AssignedUser>
                         ))
                     ) : (
                         <Placeholder>Add assigned family member</Placeholder>
                     )}
                     <div className="positionRight">
-                        <UserLogo variant="add" color="dark">
+                        <UserLogo
+                            variant="add"
+                            color="dark"
+                            onClick={showAllUsers}
+                        >
                             <FontAwesomeIcon icon={faPlus} />
                         </UserLogo>
-                        <AllUsers className="hisdden">
+                        <AllUsers className="hidden" ref={ref2}>
                             {users.map(user =>
                                 !JSON.stringify(assignedUsers).includes(
                                     user.id,
                                 ) ? (
                                     <UserLogo
+                                        key={user.id}
                                         size="small"
                                         color={user.color}
                                         logoLetters={user.logoLetters}
-                                        onClick={addAssignedUser}
+                                        onClick={() => addAssignedUser(user)}
                                     />
                                 ) : null,
                             )}
@@ -96,7 +111,8 @@ export const TaskDetails = forwardRef(
                             rows="10"
                             defaultValue={extraInfo}
                             placeholder="Text more info here"
-                            onChange={handleExtraInfoChange}
+                            onChange={handleInputChange}
+                            name="extraInfo"
                         />
                     </div>
                 </Row>

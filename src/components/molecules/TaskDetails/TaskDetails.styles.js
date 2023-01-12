@@ -29,7 +29,8 @@ export const Row = styled.div`
         color: ${({ theme }) => theme.colors.darkGray};
     }
 
-    &.twoColumns {
+    &.twoColumns,
+    .twoColumns {
         display: grid;
         grid-template-columns: 35px 1fr;
 
@@ -47,6 +48,10 @@ export const Row = styled.div`
         }
     }
 
+    &.flexContentSize {
+        flex: 0 0 auto;
+    }
+
     &.centered {
         margin: auto;
     }
@@ -54,10 +59,21 @@ export const Row = styled.div`
     .positionRight {
         position: absolute;
         right: 0;
+        top: 10px;
     }
 `
 
-export const AllUsers = styled.div``
+export const AssignedUser = styled.div`
+    align-items: center;
+`
+
+export const AllUsers = styled.div`
+    position: absolute;
+    z-index: 3;
+    &.hidden {
+        display: none;
+    }
+`
 
 export const Placeholder = styled.span`
     color: ${({ theme }) => theme.colors.lineGray};
@@ -65,5 +81,3 @@ export const Placeholder = styled.span`
     position: absolute;
     left: 0;
 `
-
-export const Checkbox = styled.input``

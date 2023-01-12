@@ -14,7 +14,6 @@ import { ACTIVE_USER_DATA } from 'data/consts'
 
 export const FamilyMembers = () => {
     const { activeFamily } = useContext(FamilyContext)
-
     const { setActiveUser } = useActiveUser()
     const { remove } = useLocalStorage()
     const {
@@ -88,7 +87,11 @@ export const FamilyMembers = () => {
     }
 
     const handleChangeName = e => {
-        setCurrentUser(prevState => ({ ...prevState, name: e.target.value, logoLetters: getLogoLetters(e.target.value) }))
+        setCurrentUser(prevState => ({
+            ...prevState,
+            name: e.target.value,
+            logoLetters: getLogoLetters(e.target.value),
+        }))
         setError('')
     }
 

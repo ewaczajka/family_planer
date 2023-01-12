@@ -17,9 +17,10 @@ export const TasksAddField = () => {
     const [isReadyToSave, setIsReadyToSave] = useState(false)
 
     const taskTemplate = {
+        checked: false,
         title: '',
         deadline: '',
-        assignedUsers: '',
+        assignedUsers: [],
         extraInfo: '',
         familyID: activeFamily,
         creationDate: '',

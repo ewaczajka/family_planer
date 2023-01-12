@@ -1,27 +1,29 @@
 import React from 'react'
 import { UserLogo } from 'components/atoms/UserLogo/UserLogo'
-import { TaskField } from './Task.styles'
+import { TaskField, StyledDiv } from './Task.styles'
+import { Checkbox } from '../Checkbox/Checkbox'
 
 export const Task = ({ task, handleTask }) => {
     const { title, deadline, assignedUsers } = task
     return (
         <TaskField as="button" onClick={() => handleTask(task)}>
-            <div>
-                <input type="checkbox"></input>
+            <StyledDiv>
+                <Checkbox type="checkbox" variant='light'/>
                 <span>{title}</span>
-            </div>
-            <div>
+            </StyledDiv>
+            <StyledDiv>
                 {deadline ? <span>{deadline}</span> : null}
                 {assignedUsers
                     ? assignedUsers.map(user => (
-                          <UserLogo
-                              size="small"
-                              color={user.color}
-                              logoLetters={user.logoLetters}
-                          />
-                      ))
-                    : null}
-            </div>
+                        <UserLogo
+                            key={user.id}
+                            size="small"
+                            color={user.color}
+                            logoLetters={user.logoLetters}
+                        />
+                    ))
+                : null}
+            </StyledDiv>
         </TaskField>
     )
 }
