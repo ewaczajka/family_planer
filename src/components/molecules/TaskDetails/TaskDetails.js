@@ -43,7 +43,12 @@ export const TaskDetails = forwardRef(
         return (
             <Wrapper ref={ref}>
                 <Row className="twoColumns">
-                    <Checkbox type="checkbox" checked={checked} variant='dark' onChange={handleCheck} />
+                    <Checkbox
+                        type="checkbox"
+                        checked={checked}
+                        variant="dark"
+                        onChange={() => handleCheck(task)}
+                    />
                     <TransparentInput
                         variant="lightBackground"
                         defaultValue={title}

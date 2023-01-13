@@ -22,7 +22,7 @@ export const useCollectionQueries = (collectionName, orderRule) => {
     const q = query(
         docsCollectionRef,
         where('familyID', '==', activeFamily),
-        orderBy(orderRule, 'desc'),
+        orderBy(orderRule, 'asc'),
     )
 
     const getDocuments = async () => {
