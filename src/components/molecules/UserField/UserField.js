@@ -1,10 +1,6 @@
 import React from 'react'
-import {
-    UserWrapperWithHover,
-    EditButton,
-    UserName,
-    UserLogoLink,
-} from './UserField.styles'
+import { UserWrapperWithHover, EditButton, UserName } from './UserField.styles'
+import { UserLogo } from 'components/atoms/UserLogo/UserLogo'
 
 export const UserField = ({
     id,
@@ -19,13 +15,13 @@ export const UserField = ({
             <EditButton onClick={() => editUser(id, name, color)}>
                 Edit
             </EditButton>
-            <UserLogoLink
+            <UserLogo
                 color={color}
+                size="big"
                 as="button"
-                onClick={() => selectUser(id)}
-            >
-                <span>{logoLetters}</span>
-            </UserLogoLink>
+                onClick={() => selectUser({ id, name, color, logoLetters })}
+                logoLetters={logoLetters}
+            />
             <UserName>{name}</UserName>
         </UserWrapperWithHover>
     )

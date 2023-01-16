@@ -7,12 +7,12 @@ export const Wrapper = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.colors.borderGray};
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     position: relative;
+    padding: 0 22px;
 `
 
 export const Logo = styled.div`
-    position: absolute;
     display: flex;
     align-items: center;
     color: ${({ theme }) => theme.colors.white};
@@ -20,12 +20,11 @@ export const Logo = styled.div`
     font-weight: bold;
     img {
         width: 40px;
-        margin: 0 15px 0 22px;
+        margin-right: 15px;
     }
 `
 
 export const Navigation = styled.div`
-    width: 100%;
     display: flex;
     justify-content: center;
 `
@@ -35,7 +34,7 @@ export const StyledLink = styled(NavLink)`
     font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: bold;
     text-decoration: none;
-    margin: 0 2%;
+    margin: 0 20px;
     position: relative;
 
     &.active {

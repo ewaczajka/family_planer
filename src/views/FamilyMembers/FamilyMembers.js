@@ -9,12 +9,12 @@ import { useNavigate } from 'react-router-dom'
 import { useActiveUser } from 'providers/ActiveUserProvider'
 import { useLocalStorage } from 'hooks/useLocalStorage'
 import { FamilyMembersQueries } from './FamilyMembersQueries'
-import { ACTIVE_USER_ID } from 'data/consts'
+import { ACTIVE_USER_DATA } from 'data/consts'
 
 export const FamilyMembers = () => {
     const { activeFamily } = useContext(FamilyContext)
 
-    const { activeUser, setActiveUser } = useActiveUser()
+    const { setActiveUser } = useActiveUser()
     const { remove } = useLocalStorage()
     const {
         users,
@@ -97,14 +97,16 @@ export const FamilyMembers = () => {
     }
 
     const getLogoLetters = name => {
-        const LogoLetters = name.match(/\b(\w)/g)
-        return LogoLetters.join('').toUpperCase()
+        const LogoLetters = name.match(/^.|(?<= )./g)
+        if (LogoLetters) {
+            return LogoLetters.join('').toUpperCase()
+        }
     }
 
-    const selectUser = id => {
-        remove(ACTIVE_USER_ID)
+    const selectUser = data => {
+        remove(ACTIVE_USER_DATA)
         navigate('/')
-        setActiveUser(id)
+        setActiveUser(data)
     }
 
     return (

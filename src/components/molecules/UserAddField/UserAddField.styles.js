@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { UserLogo } from 'components/atoms/UserLogo/UserLogo.styles'
+import { UserLogo } from 'components/atoms/UserLogo/UserLogo'
 
 export const AddBtnLogo = styled(UserLogo)`
     background-color: transparent;

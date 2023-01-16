@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth } from 'firebase-config'
 import { AuthenticationBox } from 'components/molecules/AuthenticationBox/AuthenticationBox'
 
@@ -8,6 +8,7 @@ export const LogIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [verificationMsg, setVerificationMsg] = useState('')
 
     const navigate = useNavigate()
 
@@ -19,8 +20,13 @@ export const LogIn = () => {
                 email,
                 password,
             )
-            if (family) {
+            if (family.user.emailVerified) {
                 navigate('/family')
+            } else {
+                setVerificationMsg(
+                    'Please verify your email address before logging in.',
+                )
+                signOut(auth)
             }
         } catch (error) {
             setError(error.message)
@@ -46,6 +52,7 @@ export const LogIn = () => {
             error={error}
             changeRedirect="/signup"
             redirectBtnText="Don't have an account? Sign up"
+            verificationMsg={verificationMsg}
         />
     )
 }

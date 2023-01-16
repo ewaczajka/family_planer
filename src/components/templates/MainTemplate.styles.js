@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.darkGray};
     width: 100%;
+    overflow-y: hidden;
 `
 
 export const AppBody = styled.div`
