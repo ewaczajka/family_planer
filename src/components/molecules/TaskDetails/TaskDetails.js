@@ -30,14 +30,14 @@ export const TaskDetails = forwardRef(
 
         const { users, getUsersQuery } = FamilyMembersQueries()
 
-        const ref2 = useRef(null)
+        const refSelectUsers = useRef(null)
 
         useEffect(() => {
             getUsersQuery()
         }, [])
 
         const showAllUsers = () => {
-            ref2.current.classList.toggle('hidden')
+            refSelectUsers.current.classList.toggle('hidden')
         }
 
         return (
@@ -68,7 +68,7 @@ export const TaskDetails = forwardRef(
                     />
                 </Row>
                 <Row className="flexContentSize">
-                    {assignedUsers ? (
+                    {assignedUsers.length !== 0 ? (
                         assignedUsers.map(user => (
                             <AssignedUser className="twoColumns" key={user.id}>
                                 <UserLogo
@@ -91,7 +91,7 @@ export const TaskDetails = forwardRef(
                         >
                             <FontAwesomeIcon icon={faPlus} />
                         </UserLogo>
-                        <AllUsers className="hidden" ref={ref2}>
+                        <AllUsers className="hidden" ref={refSelectUsers}>
                             {users.map(user =>
                                 !JSON.stringify(assignedUsers).includes(
                                     user.id,

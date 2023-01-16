@@ -11,5 +11,9 @@ export const AddTaskBox = styled(TaskBox)`
 `
 
 export const AddBtn = styled.button`
-
+    border: none;
+    background: transparent;
+    color: ${({ theme }) => theme.colors.lightGray};
+    font-size: ${({ theme }) => theme.fontSize.l};
+    margin-right: 10px;
 `

@@ -11,6 +11,7 @@ import { TaskDetails } from 'components/molecules/TaskDetails/TaskDetails'
 import { TasksList } from 'components/molecules/TasksList/TasksList'
 import { Timestamp } from 'firebase/firestore'
 import { UserContext } from 'providers/ActiveUserProvider'
+import { TasksOrderRules } from 'data/orderRules'
 
 const taskActionTypes = {
     addInitialValues: 'ADD INITIAL VALUES',
@@ -45,11 +46,11 @@ const reducer = (state, action) => {
 export const Tasks = ({ searchPhrase }) => {
     const { deleteDocQuery, updateDocQuery } = useCollectionQueries(
         'tasks',
-        'checked',
+        TasksOrderRules,
     )
     const { activeUser } = useContext(UserContext)
-    const ref = useRef(null)
-    const refs = useRef([])
+    const refDetailsBox = useRef(null)
+    const refCheckboxes = useRef([])
 
     const [openDetails, setOpenDetails] = useState(false)
     const [initialValues, setInitialValues] = useState({})
@@ -61,11 +62,10 @@ export const Tasks = ({ searchPhrase }) => {
         const handleClickOutside = e => {
             if (openDetails) {
                 if (
-                    ref.current &&
-                    !ref.current.contains(e.target) &&
-                    !refs.current.includes(e.target)
+                    refDetailsBox.current &&
+                    !refDetailsBox.current.contains(e.target) &&
+                    !refCheckboxes.current.includes(e.target)
                 ) {
-                    debugger
                     if (
                         JSON.stringify(editedTask) !==
                         JSON.stringify(initialValues)
@@ -91,7 +91,7 @@ export const Tasks = ({ searchPhrase }) => {
     }, [editedTask, initialValues, openDetails, checkedTask])
 
     const handleTask = (task, e) => {
-        if (!refs.current.includes(e.target)) {
+        if (!refCheckboxes.current.includes(e.target)) {
             dispatch({ type: taskActionTypes.addInitialValues, task: task })
             setInitialValues(task)
             setOpenDetails(true)
@@ -145,7 +145,6 @@ export const Tasks = ({ searchPhrase }) => {
         if (editedTask.id === task.id) {
             dispatch({ type: taskActionTypes.checkedToggle })
             setOpenDetails(openDetails)
-            debugger
         }
         setCheckedTask(task)
         setCheckedTask(prevState => ({
@@ -165,12 +164,12 @@ export const Tasks = ({ searchPhrase }) => {
             <TasksList
                 searchPhrase={searchPhrase}
                 handleTask={handleTask}
-                ref={refs}
+                ref={refCheckboxes}
                 handleCheck={handleCheck}
             />
             {openDetails ? (
                 <TaskDetails
-                    ref={ref}
+                    ref={refDetailsBox}
                     task={editedTask}
                     handleInputChange={handleInputChange}
                     addAssignedUser={addAssignedUser}

@@ -7,12 +7,13 @@ import { TransparentInput } from 'components/atoms/TransparentInput/TransparentI
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 import { UserContext } from 'providers/ActiveUserProvider'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { TasksOrderRules } from 'data/orderRules'
 
 export const TasksAddField = () => {
     const { activeFamily } = useContext(FamilyContext)
     const { activeUser } = useContext(UserContext)
 
-    const { createDocQuery } = useCollectionQueries('tasks', 'modificationDate')
+    const { createDocQuery } = useCollectionQueries('tasks', TasksOrderRules)
 
     const [isReadyToSave, setIsReadyToSave] = useState(false)
 
@@ -44,6 +45,7 @@ export const TasksAddField = () => {
             setIsReadyToSave(true)
             updateCreationData()
         }
+        e.target.reset()
     }
 
     const handleTaskTitle = e => {

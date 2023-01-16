@@ -65,11 +65,19 @@ export const Row = styled.div`
 
 export const AssignedUser = styled.div`
     align-items: center;
+    :not(:first-child) {
+        margin-top: 3px;
+    }
 `
 
 export const AllUsers = styled.div`
     position: absolute;
     z-index: 3;
+
+    :not(:last-child) {
+        margin-bottom: 3px;
+    }
+
     &.hidden {
         display: none;
     }

@@ -14,16 +14,27 @@ import {
 } from 'firebase/firestore'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 
-export const useCollectionQueries = (collectionName, orderRule) => {
+export const useCollectionQueries = (collectionName, orderRules) => {
     const { activeFamily } = useContext(FamilyContext)
 
     const [documents, setDocuments] = useState([])
     const docsCollectionRef = collection(db, collectionName)
-    const q = query(
-        docsCollectionRef,
-        where('familyID', '==', activeFamily),
-        orderBy(orderRule, 'asc'),
-    )
+
+    let q
+    if (orderRules.length === 2) {
+        q = query(
+            docsCollectionRef,
+            where('familyID', '==', activeFamily),
+            orderBy(orderRules[0].field, orderRules[0].direction),
+            orderBy(orderRules[1].field, orderRules[1].direction),
+        )
+    } else if (orderRules.length === 1) {
+        q = query(
+            docsCollectionRef,
+            where('familyID', '==', activeFamily),
+            orderBy(orderRules[0].field, orderRules[0].direction),
+        )
+    }
 
     const getDocuments = async () => {
         const data = await getDocs(q)
