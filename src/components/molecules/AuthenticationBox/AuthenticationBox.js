@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Wrapper } from './AutenticationBox.styles'
 import { Title } from 'components/atoms/Title/Title'
@@ -29,20 +29,20 @@ export const AuthenticationBox = ({
             ) : (
                 <>
                     <Title>{title}</Title>
-                    <form onSubmit={e => handleSubmit(e)} noValidate>
+                    <form onSubmit={handleSubmit} noValidate>
                         <label htmlFor="email">Your e-mail adress:</label>
                         <input
                             placeholder="e-mail"
                             name="email"
                             type="email"
-                            onChange={e => handleEmail(e)}
+                            onChange={handleEmail}
                         />
                         <label htmlFor="password">Password:</label>
                         <input
                             placeholder="password"
                             name="password"
                             type="password"
-                            onChange={e => handlePassword(e)}
+                            onChange={handlePassword}
                         />
                         <button type="submit">{btnText}</button>
                     </form>
