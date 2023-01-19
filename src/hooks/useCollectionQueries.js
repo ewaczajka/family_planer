@@ -20,21 +20,10 @@ export const useCollectionQueries = (collectionName, orderRules) => {
     const [documents, setDocuments] = useState([])
     const docsCollectionRef = collection(db, collectionName)
 
-    let q
-    if (orderRules.length === 2) {
-        q = query(
-            docsCollectionRef,
-            where('familyID', '==', activeFamily),
-            orderBy(orderRules[0].field, orderRules[0].direction),
-            orderBy(orderRules[1].field, orderRules[1].direction),
-        )
-    } else if (orderRules.length === 1) {
-        q = query(
-            docsCollectionRef,
-            where('familyID', '==', activeFamily),
-            orderBy(orderRules[0].field, orderRules[0].direction),
-        )
-    }
+    const q = query(
+        docsCollectionRef,
+        where('familyID', '==', activeFamily),
+        ...orderRules.map(rule => orderBy(rule.field, rule.direction)))
 
     const getDocuments = async () => {
         const data = await getDocs(q)
