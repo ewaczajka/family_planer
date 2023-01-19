@@ -6,6 +6,7 @@ import React, {
     useState,
 } from 'react'
 import { useCollectionQueries } from 'hooks/useCollectionQueries'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { Wrapper } from './Tasks.styles'
 import { TaskDetails } from 'components/molecules/TaskDetails/TaskDetails'
 import { TasksList } from 'components/molecules/TasksList/TasksList'
@@ -59,36 +60,23 @@ export const Tasks = ({ searchPhrase }) => {
     const [checkedTask, setCheckedTask] = useState({})
 
     useEffect(() => {
-        const handleClickOutside = e => {
-            if (openDetails) {
-                if (
-                    refDetailsBox.current &&
-                    !refDetailsBox.current.contains(e.target) &&
-                    !refCheckboxes.current.includes(e.target)
-                ) {
-                    if (
-                        JSON.stringify(editedTask) !==
-                        JSON.stringify(initialValues)
-                    ) {
-                        updateModificationData()
-                        updateDocQuery(editedTask.id, editedTask)
-                    }
-                    setOpenDetails(false)
-                    dispatch({ type: taskActionTypes.clearValues })
-                }
-            }
-        }
-        document.addEventListener('click', handleClickOutside, true)
-
         if (checkedTask.id) {
             updateDocQuery(checkedTask.id, checkedTask)
             setCheckedTask({})
         }
+    }, [checkedTask])
 
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true)
+    const saveEditedTask = () => {
+        if (JSON.stringify(editedTask) !== JSON.stringify(initialValues)) {
+            console.log('update')
+            updateModificationData()
+            updateDocQuery(editedTask.id, editedTask)
         }
-    }, [editedTask, initialValues, openDetails, checkedTask])
+        setOpenDetails(false)
+        dispatch({ type: taskActionTypes.clearValues })
+    }
+
+    useOnClickOutside(refDetailsBox, saveEditedTask, refCheckboxes)
 
     const handleTask = (task, e) => {
         if (!refCheckboxes.current.includes(e.target)) {

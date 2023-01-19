@@ -62,7 +62,7 @@ export const TasksAddField = () => {
     }
 
     return (
-        <AddTaskBox as="form" onSubmit={e => addNewTask(e)}>
+        <AddTaskBox as="form" onSubmit={addNewTask}>
             <AddBtn type="submit">
                 <FontAwesomeIcon icon={faPlus} />
             </AddBtn>
