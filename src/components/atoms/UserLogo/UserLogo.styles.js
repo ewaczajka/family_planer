@@ -4,8 +4,12 @@ export const LogoBackground = styled.div`
     width: ${({ size }) => (size === 'big' ? '140px' : '30px')};
     height: ${({ size }) => (size === 'big' ? '140px' : '30px')};
     border-radius: 50%;
-    border: ${({ theme, variant }) =>
-        variant === 'add' ? `3px dashed ${theme.colors.lightGray}` : 'none'};
+    border: ${({ theme, variant, color }) =>
+        variant === 'add'
+            ? color === 'dark'
+                ? `2px dashed ${theme.colors.gray}`
+                : `3px dashed ${theme.colors.lightGray}`
+            : 'none'};
     font-size: ${({ size }) => (size === 'big' ? '60px' : '12px')};
     position: relative;
     background: ${({ color, variant }) =>

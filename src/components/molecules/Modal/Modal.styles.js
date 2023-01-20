@@ -10,4 +10,5 @@ export const ModalWrapper = styled.div`
     background: ${({ theme }) => theme.background.beige};
     box-shadow: ${({ theme }) => theme.boxShadow.shadow};
     border-radius: 5px;
+    z-index: 9000;
 `

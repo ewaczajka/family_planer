@@ -8,12 +8,12 @@ import { theme } from 'assets/styles/theme'
 import { useNavigate } from 'react-router-dom'
 import { useActiveUser } from 'providers/ActiveUserProvider'
 import { useLocalStorage } from 'hooks/useLocalStorage'
+import { getLogoLetters } from 'helpers/getLogoLetters'
 import { FamilyMembersQueries } from './FamilyMembersQueries'
 import { ACTIVE_USER_DATA } from 'data/consts'
 
 export const FamilyMembers = () => {
     const { activeFamily } = useContext(FamilyContext)
-
     const { setActiveUser } = useActiveUser()
     const { remove } = useLocalStorage()
     const {
@@ -87,20 +87,17 @@ export const FamilyMembers = () => {
     }
 
     const handleChangeName = e => {
-        setCurrentUser(prevState => ({ ...prevState, name: e.target.value }))
+        setCurrentUser(prevState => ({
+            ...prevState,
+            name: e.target.value,
+            logoLetters: getLogoLetters(e.target.value),
+        }))
         setError('')
     }
 
     const handleChangeColor = e => {
         setCurrentUser(prevState => ({ ...prevState, color: e.target.value }))
         setSelectedColor(e.target.value)
-    }
-
-    const getLogoLetters = name => {
-        const LogoLetters = name.match(/^.|(?<= )./g)
-        if (LogoLetters) {
-            return LogoLetters.join('').toUpperCase()
-        }
     }
 
     const selectUser = data => {
