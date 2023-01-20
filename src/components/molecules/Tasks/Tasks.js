@@ -53,36 +53,46 @@ export const Tasks = ({ searchPhrase }) => {
     const refDetailsBox = useRef(null)
     const refCheckboxes = useRef([])
 
-    const [openDetails, setOpenDetails] = useState(false)
+    const [isEditorOpened, setEditorOpened] = useState(false)
+    const [isReadyToSave, setReadyToSave] = useState(false)
     const [initialValues, setInitialValues] = useState({})
 
     const [editedTask, dispatch] = useReducer(reducer, {})
     const [checkedTask, setCheckedTask] = useState({})
+
+    const saveEditedTask = e => {
+        if (
+            refCheckboxes.current
+                .map(ref => ref.contains(e.target))
+                .includes(true)
+        )
+            return
+        if (JSON.stringify(editedTask) !== JSON.stringify(initialValues)) {
+            updateModificationData()
+            setReadyToSave(true)
+        }
+        setEditorOpened(false)
+    }
 
     useEffect(() => {
         if (checkedTask.id) {
             updateDocQuery(checkedTask.id, checkedTask)
             setCheckedTask({})
         }
-    }, [checkedTask])
-
-    const saveEditedTask = () => {
-        if (JSON.stringify(editedTask) !== JSON.stringify(initialValues)) {
-            console.log('update')
-            updateModificationData()
+        if (isReadyToSave) {
             updateDocQuery(editedTask.id, editedTask)
+            dispatch({ type: taskActionTypes.clearValues })
+            setReadyToSave(false)
         }
-        setOpenDetails(false)
-        dispatch({ type: taskActionTypes.clearValues })
-    }
+    }, [checkedTask, isReadyToSave])
 
-    useOnClickOutside(refDetailsBox, saveEditedTask, refCheckboxes)
+    useOnClickOutside(refDetailsBox, saveEditedTask)
 
     const handleTask = (task, e) => {
         if (!refCheckboxes.current.includes(e.target)) {
             dispatch({ type: taskActionTypes.addInitialValues, task: task })
             setInitialValues(task)
-            setOpenDetails(true)
+            setEditorOpened(true)
         }
     }
 
@@ -132,7 +142,7 @@ export const Tasks = ({ searchPhrase }) => {
     const handleCheck = task => {
         if (editedTask.id === task.id) {
             dispatch({ type: taskActionTypes.checkedToggle })
-            setOpenDetails(openDetails)
+            setEditorOpened(isEditorOpened)
         }
         setCheckedTask(task)
         setCheckedTask(prevState => ({
@@ -143,7 +153,7 @@ export const Tasks = ({ searchPhrase }) => {
 
     const deleteTask = id => {
         deleteDocQuery(id)
-        setOpenDetails(false)
+        setEditorOpened(false)
         dispatch({ type: taskActionTypes.clearValues })
     }
 
@@ -155,7 +165,7 @@ export const Tasks = ({ searchPhrase }) => {
                 ref={refCheckboxes}
                 handleCheck={handleCheck}
             />
-            {openDetails ? (
+            {isEditorOpened ? (
                 <TaskDetails
                     ref={refDetailsBox}
                     task={editedTask}

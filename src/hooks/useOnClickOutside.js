@@ -1,21 +1,18 @@
 import { useEffect } from 'react'
 
-export const useOnClickOutside = (ref, handler, ignoredRefs) => {
+export const useOnClickOutside = (ref, handler) => {
     useEffect(() => {
         const listener = e => {
-            if (
-                !ref.current ||
-                ref.current.contains(e.target) ||
-                ignoredRefs.current.includes(e.target)
-            ) {
+            if (!ref.current || ref.current.contains(e.target)) {
                 return
             }
-            handler()
+            handler(e)
         }
-        document.addEventListener('click', listener, true)
-
+        document.addEventListener('mousedown', listener)
+        document.addEventListener('touchstart', listener)
         return () => {
-            document.addEventListener('click', listener, true)
+            document.removeEventListener('mousedown', listener)
+            document.removeEventListener('touchstart', listener)
         }
-    }, [])
+    }, [handler, ref])
 }
