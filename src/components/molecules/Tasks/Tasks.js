@@ -63,6 +63,7 @@ export const Tasks = ({ searchPhrase }) => {
     const saveEditedTask = e => {
         if (
             refCheckboxes.current
+                .filter(Boolean)
                 .map(ref => ref.contains(e.target))
                 .includes(true)
         )
@@ -142,12 +143,15 @@ export const Tasks = ({ searchPhrase }) => {
     const handleCheck = task => {
         if (editedTask.id === task.id) {
             dispatch({ type: taskActionTypes.checkedToggle })
+            updateModificationData()
             setEditorOpened(isEditorOpened)
         }
         setCheckedTask(task)
         setCheckedTask(prevState => ({
             ...prevState,
             checked: !task.checked,
+            modificationDate: Timestamp.now(),
+            modifiedBy: activeUser.id,
         }))
     }
 
