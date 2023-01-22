@@ -58,6 +58,12 @@ export const Navigation = styled.div`
         background: ${({ theme }) => theme.colors.gray};
         border-top: 1px solid ${({ theme }) => theme.colors.borderGray};
     }
+
+    @media ${deviceSize.desktop} {
+        > :first-child {
+            display: none;
+        }
+    }
 `
 
 export const StyledLink = styled(NavLink)`
@@ -94,7 +100,7 @@ export const StyledLink = styled(NavLink)`
 
     @media ${deviceSize.mobile} {
         flex-grow: 1;
-        width: 25%;
+        width: 33%;
         margin: 0;
         display: flex;
         flex-direction: column;
