@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
     width: 140px;
     height: 140px;
     border-radius: 15px;
-    background: ${({ theme, color }) => theme.background[color]};
+    background: ${({ theme, color }) => theme.notesBackground[color]};
     margin: 0 10px 20px;
     padding: 15px 17px 13px 15px;
     display: flex;

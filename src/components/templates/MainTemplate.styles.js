@@ -1,3 +1,4 @@
+import { deviceSize } from 'data/deviceSize'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
@@ -11,4 +12,8 @@ export const AppBody = styled.div`
     width: 100%;
     padding: 22px;
     overflow: hidden;
+
+    @media ${deviceSize.mobile} {
+        padding-bottom: calc(22px + 61px);
+    }
 `
