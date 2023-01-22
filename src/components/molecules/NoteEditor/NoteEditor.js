@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { StyledNoteEditor, TitleInput, TextInput } from './NoteEditor.styles'
-import { db } from 'firebase-config'
 import { Timestamp } from 'firebase/firestore'
 import { CloseButton } from 'components/atoms/CloseButton/CloseButton'
 import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton'
@@ -8,13 +7,14 @@ import { ErrorMsg } from 'components/atoms/ErrorMsg/ErrorMsg'
 import { randomBackground } from 'helpers/randomBackground'
 import { FamilyContext } from 'providers/CurrentFamilyProvider'
 import { UserContext } from 'providers/ActiveUserProvider'
-import { NotesQueries } from 'components/molecules/Notes/NotesQueries'
+import { useCollectionQueries } from 'hooks/useCollectionQueries'
+import { NotesOrderRules } from 'data/orderRules'
 
 export const NoteEditor = ({ note, handleClose }) => {
     const { activeFamily } = useContext(FamilyContext)
     const { activeUser } = useContext(UserContext)
 
-    const { deleteNoteQuery, updateNoteQuery, createNoteQuery } = NotesQueries()
+    const { deleteDocQuery, updateDocQuery, createDocQuery } = useCollectionQueries('notes', NotesOrderRules)
 
     const {
         title,
@@ -46,12 +46,12 @@ export const NoteEditor = ({ note, handleClose }) => {
         if (status === 'final') {
             if (!note.id) {
                 newNote.color = randomBackground()
-                createNoteQuery(newNote)
+                createDocQuery(newNote)
             } else if (
                 newNote.title !== noteTemplate.title ||
                 newNote.text !== noteTemplate.text
             ) {
-                updateNoteQuery(note.id, newNote)
+                updateDocQuery(note.id, newNote)
             }
             handleClose()
         }
@@ -59,7 +59,7 @@ export const NoteEditor = ({ note, handleClose }) => {
 
     const deleteNote = id => {
         if (id) {
-            deleteNoteQuery(id)
+            deleteDocQuery(id)
         }
         handleClose()
     }
