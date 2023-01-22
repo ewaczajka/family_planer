@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    margin: 20vh auto;
+    margin: 15vh auto;
+    padding-top: 25px;
     display: flex;
     gap: 30px;
     width: 100%;

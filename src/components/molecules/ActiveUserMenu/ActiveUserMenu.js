@@ -11,7 +11,7 @@ export const ActiveUserMenu = ({
 }) => {
     const ref = useRef(null)
     const toggleMenu = () => {
-        ref.current.classList.remove('hidden')
+        ref.current.classList.toggle('hidden')
     }
 
     useOnClickOutside(ref, () => {
@@ -26,7 +26,7 @@ export const ActiveUserMenu = ({
             variant="withMenu"
             onClick={toggleMenu}
         >
-            <UserMenu ref={ref}>
+            <UserMenu ref={ref} className='hidden'>
                 <MenuItem onClick={showFamily}>Family Members</MenuItem>
                 <MenuItem onClick={signOutFamily}>Log Out Family</MenuItem>
             </UserMenu>
