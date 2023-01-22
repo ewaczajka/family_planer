@@ -9,42 +9,44 @@ import { useNavigate } from 'react-router-dom'
 import { useActiveUser } from 'providers/ActiveUserProvider'
 import { useLocalStorage } from 'hooks/useLocalStorage'
 import { getLogoLetters } from 'helpers/getLogoLetters'
-import { FamilyMembersQueries } from './FamilyMembersQueries'
 import { ACTIVE_USER_DATA } from 'data/consts'
+import { useCollectionQueries } from 'hooks/useCollectionQueries'
+import { MembersOrderRules } from 'data/orderRules'
+import { Timestamp } from 'firebase/firestore'
 
 export const FamilyMembers = () => {
     const { activeFamily } = useContext(FamilyContext)
     const { setActiveUser } = useActiveUser()
     const { remove } = useLocalStorage()
     const {
-        users,
-        getUsersQuery,
-        deleteUserQuery,
-        updateUserQuery,
-        createUserQuery,
-    } = FamilyMembersQueries()
+        documents,
+        getDocsQuery,
+        deleteDocQuery,
+        updateDocQuery,
+        createDocQuery,
+    } = useCollectionQueries('members', MembersOrderRules)
 
     const navigate = useNavigate()
 
     const initialValues = {
-        currentUser: { familyID: activeFamily, color: theme.colors.gray },
+        familyID: activeFamily,
+        color: theme.colors.gray,
+        creationDate: Timestamp.now(),
     }
 
     const [editing, setEditing] = useState(false)
     const [creating, setCreating] = useState(false)
-    const [currentUser, setCurrentUser] = useState(initialValues.currentUser)
+    const [currentUser, setCurrentUser] = useState(initialValues)
     const [error, setError] = useState('')
-    const [selectedColor, setSelectedColor] = useState(
-        initialValues.currentUser.color,
-    )
+    const [selectedColor, setSelectedColor] = useState(initialValues.color)
 
     useEffect(() => {
-        getUsersQuery()
+        getDocsQuery()
     }, [])
 
     const deleteUser = id => {
         if (id) {
-            deleteUserQuery(id)
+            deleteDocQuery(id)
         } else {
             setCreating(false)
         }
@@ -56,24 +58,25 @@ export const FamilyMembers = () => {
         } else {
             if (editing) {
                 setEditing(false)
-                updateUserQuery(id, currentUser)
+                updateDocQuery(id, currentUser)
             } else if (creating) {
                 setCreating(false)
-                createUserQuery(currentUser)
+                createDocQuery(currentUser)
             }
-            setCurrentUser(initialValues.currentUser)
-            setSelectedColor(initialValues.currentUser.color)
+            setCurrentUser(initialValues)
+            setSelectedColor(initialValues.color)
         }
     }
 
-    const editUser = (id, name, color) => {
-        setEditing(id)
+    const editUser = user => {
+        setEditing(user.id)
         setCurrentUser(prevState => ({
             ...prevState,
-            name: name,
-            color: color,
+            name: user.name,
+            color: user.color,
+            creationDate: user.creationDate,
         }))
-        setSelectedColor(color)
+        setSelectedColor(user.color)
         setCreating(false)
         setError('')
     }
@@ -82,8 +85,8 @@ export const FamilyMembers = () => {
         setCreating(true)
         setEditing(false)
         setError('')
-        setCurrentUser(initialValues.currentUser)
-        setSelectedColor(initialValues.currentUser.color)
+        setCurrentUser(initialValues)
+        setSelectedColor(initialValues.color)
     }
 
     const handleChangeName = e => {
@@ -108,15 +111,12 @@ export const FamilyMembers = () => {
 
     return (
         <Wrapper>
-            {users.map(user =>
+            {documents.map(user =>
                 editing !== user.id ? (
                     <UserField
                         key={user.id}
-                        id={user.id}
-                        name={user.name}
-                        color={user.color}
+                        user={user}
                         editUser={editUser}
-                        logoLetters={getLogoLetters(user.name)}
                         selectUser={selectUser}
                     />
                 ) : (

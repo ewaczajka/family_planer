@@ -15,3 +15,10 @@ export const NotesOrderRules = [
         direction: 'desc',
     },
 ]
+
+export const MembersOrderRules = [
+    {
+        field: 'creationDate',
+        direction: 'asc',
+    },
+]

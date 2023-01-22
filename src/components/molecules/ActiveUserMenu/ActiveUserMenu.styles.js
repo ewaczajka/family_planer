@@ -2,23 +2,25 @@ import styled from 'styled-components'
 
 export const UserMenu = styled.div`
     position: absolute;
-    top: 100%;
+    bottom: -5px;
+    width: 120px;
     right: 0;
-    display: none;
+    transform: translate(0, 100%);
     flex-direction: column;
-    align-items: right;
-    width: 130px;
-    opacity: 0%;
-    border-radius: 3px;
+    background: ${({ theme }) => theme.background.beige};
+    border-radius: 5px;
+    padding: 5px;
+    justify-content: right;
 
-    button {
-        padding: 5px;
-        background: ${({ theme }) => theme.background.beige};
-        border: none;
-        border-radius: 0;
+    &.hidden {
+        display: none;
+    }
+`
 
-        :hover {
-            font-weight: bold;
-        }
+export const MenuItem = styled.div`
+    padding: 5px;
+
+    :hover {
+        font-weight: bold;
     }
 `

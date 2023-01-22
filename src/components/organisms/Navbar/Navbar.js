@@ -8,6 +8,13 @@ import { UserContext } from 'providers/ActiveUserProvider'
 import { useLocalStorage } from 'hooks/useLocalStorage'
 import { ACTIVE_USER_DATA } from 'data/consts'
 import { ActiveUserMenu } from 'components/molecules/ActiveUserMenu/ActiveUserMenu'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    faCalendarDays,
+    faHouse,
+    faListCheck,
+    faNoteSticky,
+} from '@fortawesome/free-solid-svg-icons'
 
 export const Navbar = () => {
     const pathname = useLocation().pathname
@@ -33,17 +40,27 @@ export const Navbar = () => {
         <Wrapper>
             <Logo>
                 <img src={logoIcon} alt="Logo" />
-                FamilyPlaner
+                <h1>FamilyPlaner</h1>
             </Logo>
             {pathname !== '/signup' && pathname !== '/login' ? (
                 <>
-                    <Navigation>
+                    <Navigation className="navigation">
                         <StyledLink to="/" end>
+                            <FontAwesomeIcon icon={faHouse} />
                             Dashboard
                         </StyledLink>
-                        <StyledLink to="/calendar">Calendar</StyledLink>
-                        <StyledLink to="/tasks">Tasks</StyledLink>
-                        <StyledLink to="/notes">Notes</StyledLink>
+                        <StyledLink to="/calendar">
+                            <FontAwesomeIcon icon={faCalendarDays} />
+                            Calendar
+                        </StyledLink>
+                        <StyledLink to="/tasks">
+                            <FontAwesomeIcon icon={faListCheck} />
+                            Tasks
+                        </StyledLink>
+                        <StyledLink to="/notes">
+                            <FontAwesomeIcon icon={faNoteSticky} />
+                            Notes
+                        </StyledLink>
                     </Navigation>
                     <ActiveUserMenu
                         color={color}

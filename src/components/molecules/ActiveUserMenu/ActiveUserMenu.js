@@ -1,5 +1,7 @@
 import { UserLogo } from 'components/atoms/UserLogo/UserLogo'
-import { UserMenu } from './ActiveUserMenu.styles'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import { useRef } from 'react'
+import { UserMenu, MenuItem } from './ActiveUserMenu.styles'
 
 export const ActiveUserMenu = ({
     color,
@@ -7,16 +9,26 @@ export const ActiveUserMenu = ({
     signOutFamily,
     showFamily,
 }) => {
+    const ref = useRef(null)
+    const toggleMenu = () => {
+        ref.current.classList.toggle('hidden')
+    }
+
+    useOnClickOutside(ref, () => {
+        ref.current.classList.add('hidden')
+    })
+
     return (
         <UserLogo
             size="small"
             color={color}
             logoLetters={logoLetters}
             variant="withMenu"
+            onClick={toggleMenu}
         >
-            <UserMenu>
-                <button onClick={showFamily}>Family Members</button>
-                <button onClick={signOutFamily}>Log Out Family</button>
+            <UserMenu ref={ref} className="hidden">
+                <MenuItem onClick={showFamily}>Family Members</MenuItem>
+                <MenuItem onClick={signOutFamily}>Log Out Family</MenuItem>
             </UserMenu>
         </UserLogo>
     )

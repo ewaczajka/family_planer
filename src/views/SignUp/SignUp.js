@@ -25,7 +25,7 @@ export const SignUp = () => {
                 sendEmailVerification(auth.currentUser)
                     .then(
                         setVerificationMsg(
-                            'Email with verification link was send. Please confirm and log in to your account.',
+                            'Email with a verification link was sent. Please confirm and log in to your account.',
                         ),
                     )
                     .then(signOut(auth))

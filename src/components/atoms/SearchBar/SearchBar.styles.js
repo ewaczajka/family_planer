@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput.styles'
+import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput'
 
 export const Wrapper = styled.div`
     flex: 1 1 0;

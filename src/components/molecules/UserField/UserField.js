@@ -2,27 +2,18 @@ import React from 'react'
 import { UserWrapperWithHover, EditButton, UserName } from './UserField.styles'
 import { UserLogo } from 'components/atoms/UserLogo/UserLogo'
 
-export const UserField = ({
-    id,
-    name,
-    color,
-    editUser,
-    logoLetters,
-    selectUser,
-}) => {
+export const UserField = ({ user, editUser, selectUser }) => {
     return (
         <UserWrapperWithHover>
-            <EditButton onClick={() => editUser(id, name, color)}>
-                Edit
-            </EditButton>
+            <EditButton onClick={() => editUser(user)}>Edit</EditButton>
             <UserLogo
-                color={color}
+                color={user.color}
                 size="big"
                 as="button"
-                onClick={() => selectUser({ id, name, color, logoLetters })}
-                logoLetters={logoLetters}
+                onClick={() => selectUser(user)}
+                logoLetters={user.logoLetters}
             />
-            <UserName>{name}</UserName>
+            <UserName>{user.name}</UserName>
         </UserWrapperWithHover>
     )
 }

@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react'
 import { Note } from 'components/atoms/Note/Note'
 import { Wrapper } from './Notes.styles'
-import { NotesQueries } from './NotesQueries'
+import { useCollectionQueries } from 'hooks/useCollectionQueries'
+import { NotesOrderRules } from 'data/orderRules'
 
 export const Notes = ({ handleOpen, searchPhrase }) => {
-    const { notes, getNotesQuery } = NotesQueries()
+    const { documents, getDocsQuery } = useCollectionQueries('notes', NotesOrderRules)
 
     useEffect(() => {
-        getNotesQuery()
+        getDocsQuery()
     }, [])
 
     return (
         <Wrapper>
-            {notes.map(note =>
+            {documents.map(note =>
                 note.title
                     .toLowerCase()
                     .includes(searchPhrase.toLowerCase()) ? (

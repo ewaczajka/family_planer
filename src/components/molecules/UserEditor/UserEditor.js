@@ -9,6 +9,7 @@ import {
     StyledCloseButton,
     UserNameInput,
     SaveButton,
+    ErrorMsg,
 } from './UserEditor.styles'
 
 export const UserEditor = ({
@@ -44,10 +45,10 @@ export const UserEditor = ({
                 placeholder="Name..."
                 defaultValue={name}
                 onChange={handleChangeName}
-                maxLength="10"
+                maxLength="16"
             />
             {error ? (
-                <p>{error}</p>
+                <ErrorMsg>{error}</ErrorMsg>
             ) : (
                 <SaveButton onClick={() => saveUser(id)}>
                     save changes
