@@ -11,6 +11,7 @@ export const EditButton = styled.button`
     position: absolute;
     top: -25px;
     opacity: 0%;
+    padding-bottom: 20px;
 `
 
 export const UserWrapperWithHover = styled(UserWrapper)`
@@ -23,6 +24,6 @@ export const UserName = styled.p`
     color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: bold;
-    margin: 15px;
+    margin: 15px 0;
     text-align: center;
 `

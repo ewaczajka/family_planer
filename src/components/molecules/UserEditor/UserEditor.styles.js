@@ -63,3 +63,9 @@ export const SaveButton = styled.button`
     border-radius: 5px;
     cursor: pointer;
 `
+
+export const ErrorMsg = styled.p`
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSize.s};
+    text-justify: center;
+`

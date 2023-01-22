@@ -7,7 +7,9 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 15vh auto;
+    margin: 10vh auto;
+    height: 100%;
+    overflow-y: scroll;
 `
 
 export const StyledForm = styled.form`

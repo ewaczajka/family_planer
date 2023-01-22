@@ -1,14 +1,18 @@
 import styled from 'styled-components'
-import { ViewWrapper } from 'components/atoms/ViewWrapper/ViewWrapper'
 
-export const Wrapper = styled(ViewWrapper)`
-    color: ${({ theme }) => theme.colors.white};
-    width: 80%;
-    height: auto;
-    margin: 50px auto;
-    justify-content: center;
+export const Wrapper = styled.div`
+    margin: 20vh auto;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 60px 30px 30px;
+    gap: 30px;
+    width: 100%;
+    overflow-x: scroll;
+    scroll-margin-right: 0;
+
+    > :first-child {
+        margin-left: auto;
+    }
+
+    > :last-child {
+        margin-right: auto;
+    }
 `

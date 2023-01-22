@@ -33,7 +33,7 @@ export const AuthenticationBox = ({
             {verificationMsg ? (
                 <>
                     <StyledText>{verificationMsg}</StyledText>
-                    <StyledSubmitButton as='a' href={'/'}>
+                    <StyledSubmitButton as="a" href={'/'}>
                         Take me to log in!
                     </StyledSubmitButton>
                 </>

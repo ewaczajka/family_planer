@@ -12,7 +12,8 @@ import {
 } from './TaskDetails.styles'
 import { Checkbox } from 'components/atoms/Checkbox/Checkbox'
 import { faCalendarDays, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FamilyMembersQueries } from 'views/FamilyMembers/FamilyMembersQueries'
+import { useCollectionQueries } from 'hooks/useCollectionQueries'
+import { MembersOrderRules } from 'data/orderRules'
 
 export const TaskDetails = forwardRef(
     (
@@ -28,12 +29,12 @@ export const TaskDetails = forwardRef(
     ) => {
         const { id, checked, title, deadline, assignedUsers, extraInfo } = task
 
-        const { users, getUsersQuery } = FamilyMembersQueries()
+        const { documents, getDocsQuery } = useCollectionQueries('members', MembersOrderRules)
 
         const refSelectUsers = useRef(null)
 
         useEffect(() => {
-            getUsersQuery()
+            getDocsQuery()
         }, [])
 
         const showAllUsers = () => {
@@ -92,7 +93,7 @@ export const TaskDetails = forwardRef(
                             <FontAwesomeIcon icon={faPlus} />
                         </UserLogo>
                         <AllUsers className="hidden" ref={refSelectUsers}>
-                            {users.map(user =>
+                            {documents.map(user =>
                                 !JSON.stringify(assignedUsers).includes(
                                     user.id,
                                 ) ? (
