@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput.styles'
+import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput'
+import { PurpleButton } from 'components/atoms/PurpleButton/PurpleButton'
 
 export const UserNameInput = styled(TransparentInput)`
     font-size: ${({ theme }) => theme.fontSize.l};
@@ -53,15 +54,9 @@ export const StyledCloseButton = styled.button`
     margin: auto;
 `
 
-export const SaveButton = styled.button`
+export const SaveButton = styled(PurpleButton)`
     font-size: ${({ theme }) => theme.fontSize.xs};
-    color: ${({ theme }) => theme.colors.white};
-    border-right: 1px solid ${({ theme }) => theme.colors.borderGray};
-    padding: 8px 10px 8px 8px;
-    background: ${({ theme }) => theme.background.purple};
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 8px;
 `
 
 export const ErrorMsg = styled.p`

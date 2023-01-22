@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { forwardRef, useEffect, useRef } from 'react'
 import { DeleteButton } from '../../atoms/DeleteButton/DeleteButton'
 import { UserLogo } from '../../atoms/UserLogo/UserLogo'
-import { TransparentInput } from '../../atoms/TransparentInput/TransparentInput.styles'
+import { TransparentInput } from '../../atoms/TransparentInput/TransparentInput'
 import {
     Wrapper,
     Row,
@@ -29,7 +29,10 @@ export const TaskDetails = forwardRef(
     ) => {
         const { id, checked, title, deadline, assignedUsers, extraInfo } = task
 
-        const { documents, getDocsQuery } = useCollectionQueries('members', MembersOrderRules)
+        const { documents, getDocsQuery } = useCollectionQueries(
+            'members',
+            MembersOrderRules,
+        )
 
         const refSelectUsers = useRef(null)
 

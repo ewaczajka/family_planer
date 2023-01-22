@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput.styles'
+import { TransparentInput } from 'components/atoms/TransparentInput/TransparentInput'
 import { PurpleButton } from 'components/atoms/PurpleButton/PurpleButton'
 
 export const Wrapper = styled.div`
