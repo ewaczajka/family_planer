@@ -71,7 +71,7 @@ export const StyledLink = styled(NavLink)`
     font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: bold;
     text-decoration: none;
-    margin: 0 3%;
+    margin: 0 20px;
     position: relative;
 
     svg {
