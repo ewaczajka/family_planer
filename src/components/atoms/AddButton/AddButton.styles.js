@@ -1,14 +1,10 @@
 import styled from 'styled-components'
+import { PurpleButton } from '../PurpleButton/PurpleButton'
 
-export const StyledAddButton = styled.button`
+export const StyledAddButton = styled(PurpleButton)`
     font-size: ${({ theme }) => theme.fontSize.xs};
-    color: ${({ theme }) => theme.colors.white};
     border-right: 1px solid ${({ theme }) => theme.colors.borderGray};
     padding: 8px 10px 8px 8px;
-    background: ${({ theme }) => theme.background.purple};
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 
     svg {
         margin-right: 8px;

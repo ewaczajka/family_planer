@@ -1,6 +1,13 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Wrapper } from './AutenticationBox.styles'
+import React, { useEffect, useRef } from 'react'
+import {
+    StyledForm,
+    StyledInput,
+    StyledLabel,
+    StyledSubmitButton,
+    StyledRedirectLink,
+    StyledText,
+    Wrapper,
+} from './AuthenticationBox.styles'
 import { Title } from 'components/atoms/Title/Title'
 import { authErrorMsg } from 'helpers/authErrorMsg'
 
@@ -15,44 +22,52 @@ export const AuthenticationBox = ({
     redirectBtnText,
     verificationMsg,
 }) => {
-    const navigate = useNavigate()
+    const ref = useRef(null)
+
+    useEffect(() => {
+        ref.current.focus()
+    }, [])
 
     return (
         <Wrapper>
             {verificationMsg ? (
                 <>
-                    <p>{verificationMsg}</p>
-                    <button type="button" onClick={() => navigate('/')}>
+                    <StyledText>{verificationMsg}</StyledText>
+                    <StyledRedirectLink href={'/'}>
                         Take me to log in!
-                    </button>
+                    </StyledRedirectLink>
                 </>
             ) : (
                 <>
                     <Title>{title}</Title>
-                    <form onSubmit={handleSubmit} noValidate>
-                        <label htmlFor="email">Your e-mail adress:</label>
-                        <input
+                    <StyledForm onSubmit={handleSubmit} noValidate>
+                        <StyledLabel htmlFor="email">
+                            Your e-mail adress:
+                        </StyledLabel>
+                        <StyledInput
                             placeholder="e-mail"
                             name="email"
                             type="email"
                             onChange={handleEmail}
+                            ref={ref}
                         />
-                        <label htmlFor="password">Password:</label>
-                        <input
+                        <StyledLabel htmlFor="password">Password:</StyledLabel>
+                        <StyledInput
                             placeholder="password"
                             name="password"
                             type="password"
                             onChange={handlePassword}
                         />
-                        <button type="submit">{btnText}</button>
-                    </form>
-                    {error ? <p>{authErrorMsg(error)}</p> : null}
-                    <button
-                        type="button"
-                        onClick={() => navigate(changeRedirect)}
-                    >
+                        <StyledSubmitButton type="submit">
+                            {btnText}
+                        </StyledSubmitButton>
+                        {error ? (
+                            <StyledText>{authErrorMsg(error)}</StyledText>
+                        ) : null}
+                    </StyledForm>
+                    <StyledRedirectLink href={changeRedirect}>
                         {redirectBtnText}
-                    </button>
+                    </StyledRedirectLink>
                 </>
             )}
         </Wrapper>
