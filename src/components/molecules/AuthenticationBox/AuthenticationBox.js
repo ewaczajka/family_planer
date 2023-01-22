@@ -33,9 +33,9 @@ export const AuthenticationBox = ({
             {verificationMsg ? (
                 <>
                     <StyledText>{verificationMsg}</StyledText>
-                    <StyledRedirectLink href={'/'}>
+                    <StyledSubmitButton as='a' href={'/'}>
                         Take me to log in!
-                    </StyledRedirectLink>
+                    </StyledSubmitButton>
                 </>
             ) : (
                 <>

@@ -41,6 +41,7 @@ export const StyledSubmitButton = styled(PurpleButton)`
     font-size: ${({ theme }) => theme.fontSize.s};
     padding: 12px;
     margin-top: 6px;
+    text-decoration: none;
 `
 
 export const StyledRedirectLink = styled.a`
@@ -57,4 +58,6 @@ export const StyledText = styled.p`
     color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.fontSize.s};
     margin-top: 20px;
+    margin: 20px auto;
+    text-align: center;
 `
