@@ -14,7 +14,8 @@ export const NoteEditor = ({ note, handleClose }) => {
     const { activeFamily } = useContext(FamilyContext)
     const { activeUser } = useContext(UserContext)
 
-    const { deleteDocQuery, updateDocQuery, createDocQuery } = useCollectionQueries('notes', NotesOrderRules)
+    const { deleteDocQuery, updateDocQuery, createDocQuery } =
+        useCollectionQueries('notes', NotesOrderRules)
 
     const {
         title,

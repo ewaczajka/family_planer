@@ -5,7 +5,6 @@ import { TasksSection } from 'components/organisms/TasksSection/TasksSection'
 import { Wrapper } from './Dashboard.styles'
 
 export const Dashboard = () => {
-
     useEffect(() => {
         const redirect = () => {
             if (window.innerWidth <= 1050) {

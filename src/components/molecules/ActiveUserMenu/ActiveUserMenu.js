@@ -26,7 +26,7 @@ export const ActiveUserMenu = ({
             variant="withMenu"
             onClick={toggleMenu}
         >
-            <UserMenu ref={ref} className='hidden'>
+            <UserMenu ref={ref} className="hidden">
                 <MenuItem onClick={showFamily}>Family Members</MenuItem>
                 <MenuItem onClick={signOutFamily}>Log Out Family</MenuItem>
             </UserMenu>

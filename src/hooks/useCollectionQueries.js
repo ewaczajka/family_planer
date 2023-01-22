@@ -23,7 +23,8 @@ export const useCollectionQueries = (collectionName, orderRules) => {
     const q = query(
         docsCollectionRef,
         where('familyID', '==', activeFamily),
-        ...orderRules.map(rule => orderBy(rule.field, rule.direction)))
+        ...orderRules.map(rule => orderBy(rule.field, rule.direction)),
+    )
 
     const getDocuments = async () => {
         const data = await getDocs(q)

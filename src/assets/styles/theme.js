@@ -7,7 +7,7 @@ export const theme = {
         lineGray: '#8494B9',
         white: '#FFFFFF',
         red: '#FB501A',
-        purple: '#9747FF'
+        purple: '#9747FF',
     },
     background: {
         purple: 'linear-gradient(273.06deg, rgba(0, 0, 0, 0.2) 9.25%, rgba(0, 0, 0, 0) 93.29%), #8860FB',
@@ -29,7 +29,7 @@ export const theme = {
         l: '24px',
         xl: '36px',
     },
-    
+
     boxShadow: {
         shadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
     },
