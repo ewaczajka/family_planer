@@ -5,4 +5,7 @@ export const SectionWrapper = styled(ViewWrapper)`
     grid-column: 1 / 2;
     grid-row: 1 / 3;
     color: white;
+
+    display: flex;
+    flex-direction: column;
 `

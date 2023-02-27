@@ -5,7 +5,10 @@ import { useCollectionQueries } from 'hooks/useCollectionQueries'
 import { NotesOrderRules } from 'data/orderRules'
 
 export const Notes = ({ handleOpen, searchPhrase }) => {
-    const { documents, getDocsQuery } = useCollectionQueries('notes', NotesOrderRules)
+    const { documents, getDocsQuery } = useCollectionQueries(
+        'notes',
+        NotesOrderRules,
+    )
 
     useEffect(() => {
         getDocsQuery()
