@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { Wrapper } from './Calendar.styles'
 
-export const Calendar = () => {
+export const Calendar = ({ openEditor }) => {
+    const ref = useRef(null)
+
+    useEffect(() => {
+        ref.current.calendar.updateSize()
+    }, [openEditor])
+
     return (
         <Wrapper>
             <FullCalendar
+                ref={ref}
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"
                 firstDay={1}

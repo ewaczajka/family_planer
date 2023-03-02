@@ -12,18 +12,23 @@ export const Checkbox = styled.input`
             variant === 'dark' ? theme.colors.gray : theme.colors.lightGray};
     outline: none;
     cursor: pointer;
-    background-image: url('assets/check.svg');
+    flex-shrink: 0;
 
     :checked {
-        background: ${({ theme, variant }) =>
-            variant === 'dark' ? theme.colors.gray : theme.colors.lightGray};
+        background: ${({ theme }) => theme.colors.purple};
+        border-color: ${({ theme }) => theme.colors.lightGray};
         position: relative;
 
         :after {
             content: '';
-            background-image: url('assets/check.svg');
-            -webkit-mask-image: url('assets/check.svg');
-            mask-image: url('assets/check.svg');
+            position: absolute;
+            height: 12px;
+            width: 8px;
+            top: 50%;
+            left: 25%;
+            transform: rotate(45deg) translate(-50%, -50%);
+            border-bottom: 3px solid ${({ theme }) => theme.colors.lightGray};
+            border-right: 3px solid ${({ theme }) => theme.colors.lightGray};
         }
     }
 `

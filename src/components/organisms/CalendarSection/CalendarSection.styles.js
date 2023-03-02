@@ -9,3 +9,16 @@ export const SectionWrapper = styled(ViewWrapper)`
     display: flex;
     flex-direction: column;
 `
+export const SectionBody = styled.div`
+    flex-grow: 1;
+    display flex;
+    padding: 20px 30px;
+    gap: 35px;
+
+    >:first-child {
+        flex: 70%;
+    }
+    >:last-child {
+        flex: 30%;
+    }
+`

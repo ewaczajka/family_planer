@@ -7,7 +7,7 @@ export const theme = {
         lineGray: '#8494B9',
         white: '#FFFFFF',
         red: '#FB501A',
-        purple: '#9747FF',
+        purple: '#8860FB',
     },
     background: {
         purple: 'linear-gradient(273.06deg, rgba(0, 0, 0, 0.2) 9.25%, rgba(0, 0, 0, 0) 93.29%), #8860FB',

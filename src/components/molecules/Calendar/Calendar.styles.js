@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    margin: 20px 30px;
-    flex-grow: 1;
+    height: 100%;
     overflow-y: scroll;
 
     .fc {
@@ -40,7 +39,7 @@ export const Wrapper = styled.div`
 
         .fc-today-button {
             font-size: ${({ theme }) => theme.fontSize.s};
-            color: ${({ theme }) => theme.colors.borderGray};
+            color: ${({ theme }) => theme.colors.lightGray};
         }
 
         .fc-daygrid-day.fc-day-today {
