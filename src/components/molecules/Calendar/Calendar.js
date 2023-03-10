@@ -2,13 +2,19 @@ import React, { useEffect, useRef } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { Wrapper } from './Calendar.styles'
+import { useCollectionQueries } from 'hooks/useCollectionQueries'
 
-export const Calendar = ({ openEditor }) => {
+export const Calendar = ({ isEditorOpen, setEditorOpen, handleEvent }) => {
     const ref = useRef(null)
+    const { documents, getDocsQuery } = useCollectionQueries('events', [])
+
+    useEffect(() => {
+        getDocsQuery()
+    }, [])
 
     useEffect(() => {
         ref.current.calendar.updateSize()
-    }, [openEditor])
+    }, [isEditorOpen])
 
     return (
         <Wrapper>
@@ -26,6 +32,8 @@ export const Calendar = ({ openEditor }) => {
                     center: '',
                     end: 'prev today next',
                 }}
+                events={documents}
+                eventClick={e => handleEvent(e.event._def)}
             />
         </Wrapper>
     )

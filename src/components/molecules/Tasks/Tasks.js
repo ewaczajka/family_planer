@@ -53,7 +53,7 @@ export const Tasks = ({ searchPhrase }) => {
     const refDetailsBox = useRef(null)
     const refCheckboxes = useRef([])
 
-    const [isEditorOpened, setEditorOpened] = useState(false)
+    const [isEditorOpen, setEditorOpen] = useState(false)
     const [isReadyToSave, setReadyToSave] = useState(false)
     const [initialValues, setInitialValues] = useState({})
 
@@ -72,7 +72,7 @@ export const Tasks = ({ searchPhrase }) => {
             updateModificationData()
             setReadyToSave(true)
         }
-        setEditorOpened(false)
+        setEditorOpen(false)
     }
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export const Tasks = ({ searchPhrase }) => {
         if (!refCheckboxes.current.includes(e.target)) {
             dispatch({ type: taskActionTypes.addInitialValues, task: task })
             setInitialValues(task)
-            setEditorOpened(true)
+            setEditorOpen(true)
         }
     }
 
@@ -144,7 +144,7 @@ export const Tasks = ({ searchPhrase }) => {
         if (editedTask.id === task.id) {
             dispatch({ type: taskActionTypes.checkedToggle })
             updateModificationData()
-            setEditorOpened(isEditorOpened)
+            setEditorOpen(isEditorOpen)
         }
         setCheckedTask(task)
         setCheckedTask(prevState => ({
@@ -157,7 +157,7 @@ export const Tasks = ({ searchPhrase }) => {
 
     const deleteTask = id => {
         deleteDocQuery(id)
-        setEditorOpened(false)
+        setEditorOpen(false)
         dispatch({ type: taskActionTypes.clearValues })
     }
 
@@ -169,7 +169,7 @@ export const Tasks = ({ searchPhrase }) => {
                 ref={refCheckboxes}
                 handleCheck={handleCheck}
             />
-            {isEditorOpened ? (
+            {isEditorOpen ? (
                 <TaskDetails
                     ref={refDetailsBox}
                     task={editedTask}

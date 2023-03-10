@@ -42,11 +42,11 @@ export const StyledForm = styled.form`
         }
     }
 
-    
-
-    > :last-child {
+    > .twoColumns {
         display: flex;
+        justify-items: stretch;
         gap 20px;
+
         button {
             flex: 1 1 50%;
             padding: 10px 15px;
